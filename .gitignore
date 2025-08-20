@@ -28,24 +28,6 @@ ENV/
 # Jupyter Notebook
 .ipynb_checkpoints
 
-# Data files (large)
-*.csv
-*.xlsx
-*.json
-!data/raw/.gitkeep
-!data/processed/.gitkeep
-
-# Models
-*.pkl
-*.joblib
-*.model
-
-# Results
-results/models/*
-results/plots/*
-!results/models/.gitkeep
-!results/plots/.gitkeep
-
 # OS
 .DS_Store
 Thumbs.db
