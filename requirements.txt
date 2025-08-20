@@ -1,0 +1,21 @@
+# Core ML and Data Science
+pandas
+numpy
+scikit-learn
+xgboost
+
+# Explainable AI
+shap
+lime
+
+# Visualization
+matplotlib
+seaborn
+plotly
+
+# Jupyter and Development
+jupyter
+ipykernel
+
+# Utilities
+tqdm
