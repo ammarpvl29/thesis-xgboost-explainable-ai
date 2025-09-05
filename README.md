@@ -1,4 +1,4 @@
-<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/ddc97904-3d26-4f39-a519-c97a0d29162c" /># Prediksi Biaya Pengobatan Pasien Menggunakan XGBoost dengan Pendekatan Explainable AI
+# Prediksi Biaya Pengobatan Pasien Menggunakan XGBoost dengan Pendekatan Explainable AI
 
 **Student:** Ammar Pavel Zamora Siregar (1202224044)  
 **Program:** Sarjana Informatika, Universitas Telkom  
