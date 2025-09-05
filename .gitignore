@@ -37,3 +37,9 @@ Thumbs.db
 .idea/
 *.swp
 *.swo
+
+# Data files
+data/raw/*.csv
+
+# Results/plots
+results/plots/*.png

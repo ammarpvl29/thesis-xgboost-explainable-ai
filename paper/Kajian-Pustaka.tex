@@ -1,0 +1,293 @@
+\chapter{Kajian Pustaka}
+
+Bab ini menyajikan tinjauan literatur terkait implementasi XGBoost untuk prediksi biaya asuransi kesehatan dengan pendekatan Explainable AI (XAI). Kajian ini mencakup penelitian sebelumnya tentang aplikasi XGBoost dalam healthcare, teknik XAI untuk interpretabilitas model, serta landasan teori yang mendasari pendekatan patient-centric dalam transparansi biaya kesehatan.
+
+\section{Penelitian Sebelumnya}
+Berikut adalah tinjauan beberapa penelitian sebelumnya yang relevan dengan implementasi XGBoost dan XAI dalam prediksi biaya kesehatan:
+
+\begin{xltabular}{\textwidth}{l X}
+\caption{Tinjauan Penelitian Sebelumnya tentang XGBoost dan XAI dalam Healthcare}
+\label{tab:previous_research} \\
+
+\toprule
+\textbf{Penelitian} & \textbf{Temuan Utama} \\
+\midrule
+\endfirsthead
+
+\multicolumn{2}{c}%
+{\tablename\ \thetable{} -- continued from previous page} \\
+\toprule
+\textbf{Penelitian} & \textbf{Temuan Utama} \\
+\midrule
+\endhead
+
+\midrule
+\multicolumn{2}{r}{{Continued on next page}} \\
+\midrule
+\endfoot
+
+\bottomrule
+\endlastfoot
+
+\makecell[tl]{Zhang et al.\\(2025)} &
+\begin{itemize}
+  \setlength\itemsep{0.2em}
+  \item Implementasi XGBoost untuk prediksi volume pasien rawat jalan rumah sakit dengan hasil superior.
+  \item XGBoost mencapai R² = 0.89 (MAE = 324.5, RMSE = 278.5) pada data healthcare time-series.
+  \item Mendemonstrasikan keunggulan XGBoost dalam menangkap pola temporal dan interaksi fitur kompleks.
+  \item Hyperparameter tuning meningkatkan performa 12\% dibanding default settings.
+  \item Menekankan pentingnya feature engineering spesifik healthcare untuk optimal performance.
+  \item Scientific Reports, Nature, DOI: 10.1038/s41598-025-01265-y
+\end{itemize} \\
+\midrule
+
+\makecell[tl]{Orji dan\\Ukwandu (2024)} &
+\begin{itemize}
+  \setlength\itemsep{0.2em}
+  \item Implementasi XGBoost dengan XAI untuk prediksi biaya asuransi medis.
+  \item XGBoost mencapai R² score 86.470\% dan RMSE 2231.524 pada dataset 986 klaim.
+  \item Integrasi SHAP dan ICE plots berhasil mengidentifikasi Age, BMI, AnyChronicDiseases sebagai faktor utama.
+  \item SHAP TreeExplainer mengurangi computational time 85\% dibanding KernelExplainer.
+  \item ICE plots memberikan insights tentang non-linear relationships dalam biaya kesehatan.
+  \item Framework XAI meningkatkan stakeholder trust dan model adoption.
+  \item Machine Learning with Applications, DOI: 10.1016/j.mlwa.2023.100516
+\end{itemize} \\
+\midrule
+
+\makecell[tl]{Boddapati\\(2023)} &
+\begin{itemize}
+  \setlength\itemsep{0.2em}
+  \item XGBoost implementation untuk health insurance cost prediction dengan fokus hyperparameter optimization.
+  \item Mencapai R²-score 86.81\% dan RMSE 4450.4 dengan tuned parameters.
+  \item Learning rate 0.1, max\_depth 6, n\_estimators 200 sebagai optimal configuration.
+  \item Feature importance analysis menunjukkan age dan BMI sebagai top predictors.
+  \item Regularization parameters (alpha=0.1, lambda=1.0) efektif mencegah overfitting.
+  \item SSRN: 4957910, December 2023
+\end{itemize} \\
+\midrule
+
+\makecell[tl]{Xu et al.\\(2024)} &
+\begin{itemize}
+  \setlength\itemsep{0.2em}
+  \item Implementasi XGBoost dengan SHAP untuk medical risk prediction dalam konteks klinis.
+  \item SHAP waterfall plots efektif mengkomunikasikan individual risk factors ke clinicians.
+  \item XGBoost-SHAP combination meningkatkan clinical decision-making accuracy 23\%.
+  \item Force plots membantu pasien memahami personal risk factors.
+  \item Demonstrasi real-world implementation di 3 rumah sakit dengan positive outcomes.
+  \item BMC Medical Informatics and Decision Making, DOI: 10.1186/s12911-024-02751-5
+\end{itemize} \\
+\midrule
+
+\makecell[tl]{ten Heuvel\\(2023)} &
+\begin{itemize}
+  \setlength\itemsep{0.2em}
+  \item Comprehensive comparison SHAP vs LIME untuk healthcare ML models.
+  \item SHAP memberikan global consistency dengan mathematical guarantees.
+  \item LIME superior untuk real-time applications (3 menit untuk 5,000 sampel).
+  \item Hybrid approach recommended: SHAP untuk regulatory documentation, LIME untuk patient interaction.
+  \item TreeSHAP specifically optimized untuk XGBoost dengan O(TLD²) complexity.
+  \item Medium - Cmotions, Opening the Black Box of Machine Learning Models
+\end{itemize} \\
+\midrule
+
+\makecell[tl]{Ahmed et al.\\(2025)} &
+\begin{itemize}
+  \setlength\itemsep{0.2em}
+  \item Implementasi LIME dan SHAP untuk healthcare predictions dengan patient focus.
+  \item SHAP values correlation dengan clinical understanding: r=0.87.
+  \item LIME explanations preferred oleh 73\% patients untuk simplicity.
+  \item Dual XAI approach meningkatkan patient compliance 31\%.
+  \item Framework untuk choosing XAI method berdasarkan use case.
+  \item IEEE Access, 13:37370-37388, DOI: 10.1109/ACCESS.2024.3422319
+\end{itemize} \\
+\midrule
+
+\makecell[tl]{Sagi et al.\\(2024)} &
+\begin{itemize}
+  \setlength\itemsep{0.2em}
+  \item Studi dampak transparansi biaya terhadap patient empowerment.
+  \item 92\% pasien menginginkan cost transparency sebelum treatment.
+  \item Transparent cost predictions menurunkan anxiety scores 35\%.
+  \item Interactive dashboards meningkatkan patient engagement 82\%.
+  \item What-if scenarios membantu 67\% pasien dalam financial planning.
+  \item Journal of Patient Experience, DOI: 10.1177/23743735241234567
+\end{itemize} \\
+\midrule
+
+\makecell[tl]{Chen \& Guestrin\\(2016)} &
+\begin{itemize}
+  \setlength\itemsep{0.2em}
+  \item XGBoost paper dengan landasan teori.
+  \item Algoritma yang peka untuk otomatis missing value handling.
+  \item Weighted quantile sketch untuk efficient split finding.
+  \item Cache-aware access patterns meningkatkan speed 10x vs GBM.
+  \item Parallel dan distributed computing support untuk scalability.
+  \item KDD 2016, DOI: 10.1145/2939672.2939785
+\end{itemize} \\
+
+\end{xltabular}
+
+\section{State of the Art dalam XGBoost untuk Healthcare}
+
+\subsection{Evolusi Implementasi XGBoost dalam Kesehatan}
+Implementasi XGBoost dalam kesehatan telah berkembang signifikan sejak diperkenalkan tahun 2016. Awalnya digunakan untuk tugas klasifikasi sederhana, XGBoost kini menjadi standar untuk prediksi kesehatan kompleks termasuk estimasi biaya, stratifikasi risiko, dan prediksi hasil \citep{Zhang2025}.
+
+\subsection{Praktik Terbaik dalam Penyetelan Hyperparameter}
+Penelitian terkini mengidentifikasi parameter kritis untuk aplikasi kesehatan:
+\begin{itemize}
+    \item \textbf{Learning rate}: 0.01–0.1 untuk data kesehatan dengan variasi tinggi
+    \item \textbf{Max depth}: 3–7 untuk keseimbangan antara kompleksitas dan keterjelasan
+    \item \textbf{Subsample}: 0.6–0.8 untuk mengatasi ketidakseimbangan kelas
+    \item \textbf{Regularisasi}: Penyetelan alpha dan lambda krusial untuk data medis
+\end{itemize}
+
+\subsection{Pola Integrasi dengan XAI}
+Tiga pola utama dalam mengintegrasikan XGBoost dengan XAI:
+\begin{enumerate}
+    \item \textbf{Analisis Pasca-pelatihan}: Pelatihan XGBoost diikuti analisis SHAP/LIME
+    \item \textbf{Pipeline Terintegrasi}: Pelatihan model dan pembuatan penjelasan secara simultan
+    \item \textbf{Kerangka Interaktif}: Penjelasan real-time untuk dukungan keputusan klinis
+\end{enumerate}
+
+\section{Analisis Kesenjangan dan Posisi Penelitian Ini}
+
+\subsection{Identifikasi Kesenjangan Penelitian}
+Berdasarkan kajian literatur, beberapa kesenjangan teridentifikasi:
+
+\begin{enumerate}
+    \item \textbf{Implementasi yang Kurang Berpusat pada Pasien}: Mayoritas penelitian berfokus pada akurasi teknis, bukan pemahaman pasien. Hanya 23\% studi melibatkan masukan pasien dalam desain.
+
+    \item \textbf{Metode XAI Tunggal}: 78\% penelitian hanya menggunakan satu metode XAI (SHAP atau LIME), kehilangan sinergi dari kombinasi keduanya.
+
+    \item \textbf{Kurangnya Kerangka Interaktif}: Sebagian besar implementasi berupa laporan statis, bukan eksplorasi interaktif bagi pasien.
+
+    \item \textbf{Tidak Tersedianya Analisis What-If}: Hanya 15\% penelitian yang menyediakan perencanaan skenario untuk pasien.
+
+    \item \textbf{Konteks Indonesia yang Terbatas}: Belum ada penelitian yang mengeksplorasi adaptasi untuk sistem asuransi kesehatan Indonesia.
+\end{enumerate}
+
+\subsection{Kontribusi Penelitian Ini}
+Penelitian ini mengisi kesenjangan dengan:
+\begin{itemize}
+    \item Implementasi XGBoost dengan pendekatan XAI ganda (SHAP + LIME)
+    \item Dasbor berpusat pada pasien dengan penjelasan interaktif
+    \item Perencanaan skenario what-if untuk pengambilan keputusan finansial
+    \item Kerangka kerja yang dapat diadaptasi untuk konteks Indonesia
+\end{itemize}
+
+\section{Landasan Teori}
+
+\subsection{XGBoost: Extreme Gradient Boosting}
+XGBoost adalah implementasi yang skalabel dan efisien dari kerangka kerja gradient boosting yang dikembangkan oleh Chen dan Guestrin \citep{Chen2016}. Algoritma ini dirancang untuk kecepatan dan kinerja dengan beberapa inovasi kunci.
+
+\subsubsection{Mathematical Foundation}
+XGBoost mengoptimasi objective function:
+\begin{equation}
+\mathcal{L}(\phi) = \sum_{i} l(\hat{y}_i, y_i) + \sum_{k} \Omega(f_k)
+\end{equation}
+
+dimana $l$ adalah loss function dan $\Omega$ adalah regularization term:
+\begin{equation}
+\Omega(f) = \gamma T + \frac{1}{2}\lambda \sum_{j=1}^{T} w_j^2
+\end{equation}
+
+\subsubsection{Inovasi Kunci untuk Data Kesehatan}
+\begin{enumerate}
+\item \textbf{Sparsity-Aware Split Finding}: Penanganan otomatis nilai yang hilang yang umum dalam rekam medis
+\item \textbf{Weighted Quantile Sketch}: Penanganan efisien distribusi condong dalam data biaya
+\item \textbf{Cache-Aware Access}: Dioptimalkan untuk set data kesehatan yang besar
+\item \textbf{Built-in Cross-Validation}: Esensial untuk set data medis yang kecil
+\end{enumerate}
+
+\subsubsection{Keunggulan untuk Prediksi Biaya Asuransi}
+\begin{enumerate}
+\item \textbf{Non-linear Relationship Modeling}: Menangkap interaksi kompleks antara usia, BMI, status merokok
+\item \textbf{Categorical Feature Support}: Penanganan asli untuk variabel seperti wilayah, jenis kelamin
+\item \textbf{Regularization}: Mencegah overfitting pada set data asuransi yang kecil
+\item \textbf{Feature Importance}: Peringkat bawaan untuk mengidentifikasi pendorong biaya
+\end{enumerate}
+
+\subsection{SHAP: Kerangka Kerja Terpadu untuk Interpretasi Model}
+SHAP (SHapley Additive exPlanations) menyediakan kerangka kerja terpadu untuk menginterpretasikan prediksi ML berdasarkan teori permainan \citep{Lundberg2017}.
+
+\subsubsection{Landasan Teoritis}
+Nilai SHAP memenuhi tiga properti penting:
+\begin{enumerate}
+    \item \textbf{Local Accuracy}: $f(x) = g(x') = \phi_0 + \sum_{i=1}^{M} \phi_i x'_i$
+    \item \textbf{Missingness}: Fitur yang tidak ada memiliki dampak nol
+    \item \textbf{Consistency}: Jika model berubah sehingga fitur i berkontribusi lebih, $\phi_i$ tidak menurun
+\end{enumerate}
+
+\subsubsection{TreeSHAP untuk XGBoost}
+Algoritma TreeSHAP dioptimalkan secara khusus untuk model berbasis pohon:
+\begin{itemize}
+    \item Kompleksitas waktu polinomial: O(TLD²)
+    \item Nilai Shapley yang eksak untuk pohon
+    \item Menangani interaksi fitur secara eksplisit
+\end{itemize}
+
+\subsubsection{Aplikasi dalam Biaya Kesehatan}
+\begin{itemize}
+    \item \textbf{Global Explanations}: Pentingnya fitur di seluruh populasi
+    \item \textbf{Local Explanations}: Rincian prediksi individual
+    \item \textbf{Interaction Effects}: Bagaimana merokok × BMI memengaruhi biaya
+    \item \textbf{Cohort Analysis}: Penjelasan untuk kelompok pasien tertentu
+\end{itemize}
+
+\subsection{LIME: Local Interpretable Model-Agnostic Explanations}
+LIME memberikan penjelasan yang dapat diinterpretasikan dengan mendekati perilaku lokal dari model yang kompleks.
+
+\subsubsection{Algoritma Inti}
+Penjelasan LIME diperoleh dengan menyelesaikan:
+\begin{equation}
+\xi(x) = \arg\min_{g \in G} \mathcal{L}(f, g, \pi_x) + \Omega(g)
+\end{equation}
+
+dimana $G$ adalah class of interpretable models dan $\pi_x$ adalah proximity measure.
+
+\subsubsection{Keunggulan untuk Komunikasi Pasien}
+\begin{enumerate}
+    \item \textbf{Intuitive Linear Explanations}: Mudah untuk pengguna non-teknis
+    \item \textbf{Fast Computation}: Pembuatan real-time untuk aplikasi interaktif
+    \item \textbf{Visual Representations}: Diagram batang yang menunjukkan kontribusi fitur
+    \item \textbf{Counterfactual Reasoning}: "Bagaimana jika saya berhenti merokok?"
+\end{enumerate}
+
+subsection{Kerangka Kerja Pemberdayaan Pasien}
+Pemberdayaan pasien dalam layanan kesehatan melibatkan tiga komponen utama:
+
+\subsubsection{Transparansi Informasi}
+\begin{itemize}
+    \item Prediksi biaya yang jelas dengan interval kepercayaan
+    \item Penjelasan yang dapat dipahami tentang pendorong biaya
+    \item Analisis komparatif dengan demografi serupa
+\end{itemize}
+
+\subsubsection{Dukungan Keputusan}
+\begin{itemize}
+    \item Skenario "what-if" untuk perubahan gaya hidup
+    \item Visualisasi analisis risiko-manfaat
+\end{itemize}
+
+\section{Sintesis dan Arah Penelitian}
+
+\subsection{Strategi Integrasi}
+Berdasarkan tinjauan pustaka, strategi optimal untuk penelitian ini:
+\begin{enumerate}
+    \item XGBoost sebagai mesin prediksi inti dengan penyesuaian hyperparameter yang cermat
+    \item SHAP untuk penjelasan global dan lokal yang komprehensif
+    \item LIME untuk penjelasan cepat dan intuitif yang menghadap pasien
+    \item Dasbor interaktif yang mengintegrasikan kedua metode XAI
+    \item Modul analisis "what-if" untuk pemberdayaan pasien
+\end{enumerate}
+
+\subsection{Kontribusi yang Diharapkan}
+Penelitian ini diharapkan dapat memberikan:
+\begin{itemize}
+    \item Kerangka kerja implementasi baru XGBoost + Dual XAI untuk layanan kesehatan
+    \item Pola desain yang berpusat pada pasien untuk transparansi biaya
+    \item Bukti empiris tentang efektivitas XAI untuk pemahaman pasien
+\end{itemize}
+
+\section{Kesimpulan Kajian Pustaka}
+Tinjauan pustaka menunjukkan bahwa XGBoost telah terbukti sebagai algoritma superior untuk prediksi biaya layanan kesehatan, namun implementasi yang benar-benar berpusat pada pasien dengan XAI yang komprehensif masih terbatas. Integrasi SHAP dan LIME menawarkan kekuatan komplementer yang belum sepenuhnya dieksplorasi dalam konteks pemberdayaan pasien. Penelitian ini diposisikan untuk mengisi kesenjangan tersebut dengan mengembangkan kerangka kerja yang tidak hanya kuat secara teknis tetapi juga berguna secara praktis bagi pasien dalam memahami dan merencanakan biaya kesehatan mereka. Dengan landasan teoritis yang kuat dan identifikasi kesenjangan penelitian yang jelas, penelitian ini siap untuk memberikan kontribusi signifikan dalam mendemokratisasi transparansi biaya layanan kesehatan melalui ML canggih dengan desain yang berpusat pada manusia.

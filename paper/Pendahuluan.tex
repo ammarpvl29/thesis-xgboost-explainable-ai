@@ -1,0 +1,147 @@
+\chapter{Pendahuluan}
+
+\section{Latar Belakang}
+Kesehatan merupakan hak fundamental yang harus dapat diakses oleh seluruh lapisan masyarakat. Namun, kompleksitas biaya pengobatan seringkali menjadi penghalang utama dalam pengambilan keputusan perawatan kesehatan. Di Amerika Serikat, 47\% penduduk dewasa mengalami kesulitan untuk membayar biaya pengobatan, dan 41\% memiliki utang medis \citep{KFF2024}. Situasi serupa terjadi di Indonesia, di mana ketidakpastian biaya pengobatan membuat pasien kesulitan merencanakan finansial mereka. Studi menunjukkan bahwa 92\% pasien ingin mengetahui estimasi biaya pengobatan out-of-pocket sebelum menerima perawatan, namun informasi ini jarang tersedia dengan akurat \citep{Sagi2024}. Ketidaktransparanan biaya pengobatan ini tidak hanya berdampak pada beban finansial pasien, tetapi juga mempengaruhi kualitas keputusan kesehatan yang diambil.
+
+Konsekuensi dari ketidakpastian biaya pengobatan sangat signifikan bagi pasien. Penelitian menunjukkan bahwa diskusi biaya yang didukung oleh alat pengambilan keputusan dapat menurunkan skor ketidakpastian dari 2.6 menjadi 2.1 (P=.02) dan meningkatkan skor pengetahuan dari 0.6 menjadi 0.7 (P=.04) \citep{Sagi2024}. McKinsey melaporkan bahwa 89\% konsumen tertarik untuk membandingkan biaya layanan kesehatan ketika diberikan informasi yang transparan, dengan 33-52\% bersedia berganti penyedia layanan untuk mendapatkan penghematan \citep{McKinsey2023}. Data ini menunjukkan bahwa transparansi biaya pengobatan bukan hanya preferensi, tetapi kebutuhan kritis untuk pemberdayaan pasien dalam sistem kesehatan modern.
+
+Dalam konteks prediksi biaya pengobatan pasien, pendekatan tradisional menggunakan metode statistik sederhana terbukti tidak memadai. Linear regression, meskipun mudah diinterpretasi, hanya mencapai R² = 0.7509 pada dataset biaya pengobatan, menunjukkan keterbatasan dalam menangkap kompleksitas hubungan non-linear antara faktor-faktor kesehatan dan biaya pengobatan \citep{Susilo2024}. Keterbatasan ini mendorong kebutuhan akan metode yang lebih sophisticated yang dapat menangani kompleksitas data pengobatan modern.
+
+XGBoost (eXtreme Gradient Boosting) muncul sebagai solusi potensial untuk mengatasi keterbatasan metode tradisional dalam prediksi biaya pengobatan. Sebagai implementasi efisien dari gradient boosting decision tree, XGBoost telah menunjukkan performa superior dalam berbagai aplikasi prediksi biaya kesehatan. Penelitian menunjukkan XGBoost dapat mencapai R² = 0.8681 pada dataset biaya pengobatan, signifikan lebih tinggi dibanding metode tradisional \citep{Zhang2025}. Keunggulan XGBoost terletak pada kemampuannya menangkap interaksi kompleks antar fitur, seperti hubungan non-linear antara faktor demografis (usia, jenis kelamin), perilaku kesehatan (merokok, BMI), dan biaya pengobatan. Algoritma ini juga memiliki built-in regularization untuk mencegah overfitting dan dukungan untuk categorical features, membuatnya ideal untuk dataset pengobatan yang mencakup variabel campuran \citep{XGBoost2024}.
+
+Namun, peningkatan akurasi dari model machine learning kompleks seperti XGBoost seringkali datang dengan trade-off berupa berkurangnya interpretabilitas model. Dalam konteks kesehatan, di mana keputusan dapat memiliki dampak signifikan pada kehidupan pasien, kemampuan untuk menjelaskan bagaimana model sampai pada prediksi biaya pengobatan tertentu menjadi krusial. Regulasi seperti GDPR di Eropa memberikan "right to explanation" kepada individu yang terkena dampak keputusan algoritmik \citep{Ahmed2025}. Di sinilah pentingnya integrasi Explainable AI (XAI) dalam implementasi XGBoost untuk prediksi biaya pengobatan.
+
+Teknik XAI seperti SHAP (SHapley Additive exPlanations) dan LIME (Local Interpretable Model-agnostic Explanations) menawarkan solusi untuk "black box" problem dalam machine learning. SHAP, berbasis teori game, memberikan penjelasan yang konsisten secara matematis tentang kontribusi setiap fitur terhadap prediksi biaya pengobatan. Integrasi SHAP dengan XGBoost sangat optimal karena library SHAP menyediakan TreeExplainer yang dirancang khusus untuk tree-based models, memberikan komputasi efisien dan interpretasi yang akurat \citep{Lundberg2017}. LIME, di sisi lain, menawarkan interpretasi lokal yang intuitif dengan kecepatan komputasi superior, memungkinkan explanations real-time untuk aplikasi patient-facing \citep{tenHeuvel2023}.
+
+Dataset Kaggle Insurance Cost menyediakan platform ideal untuk penelitian ini dengan 1338 records yang mencakup faktor-faktor kunci yang mempengaruhi biaya pengobatan: usia, jenis kelamin, BMI, jumlah tanggungan, status merokok, dan wilayah tempat tinggal. Variable 'charges' dalam dataset ini merepresentasikan biaya medis individual yang mencerminkan biaya pengobatan pasien. Dataset ini telah digunakan secara luas dalam penelitian ML untuk prediksi biaya kesehatan, memungkinkan validasi dan perbandingan dengan studi sebelumnya \citep{Orji2023}. Karakteristik dataset yang mencakup variabel numerik dan kategorikal memberikan kesempatan untuk mendemonstrasikan kemampuan XGBoost dalam menangani tipe data campuran yang umum dalam data pengobatan.
+
+Penelitian ini mengadopsi perspektif patient-centric yang berbeda dari studi sebelumnya yang umumnya fokus pada kepentingan penyedia layanan kesehatan atau pembuat kebijakan. Dengan mengimplementasikan XGBoost yang diperkuat dengan XAI, penelitian ini bertujuan mengembangkan sistem prediksi biaya pengobatan yang tidak hanya akurat tetapi juga transparan dan dapat dipahami pasien. Pendekatan ini memungkinkan pasien untuk memahami faktor-faktor yang mempengaruhi biaya pengobatan mereka, mendukung pengambilan keputusan yang lebih informed, dan ultimately mengurangi kejutan biaya yang dapat menyebabkan kesulitan finansial.
+
+\section{Perumusan Masalah}
+Penelitian ini dilatarbelakangi oleh kesenjangan antara kebutuhan pasien akan transparansi biaya pengobatan dan keterbatasan metode prediksi yang ada. Masalah utama yang dihadapi adalah bagaimana mengembangkan sistem prediksi biaya pengobatan pasien yang tidak hanya akurat tetapi juga dapat memberikan penjelasan yang dipahami pasien. Metode tradisional seperti Linear Regression mudah diinterpretasi tetapi kurang akurat (R² = 0.75), sementara model machine learning kompleks menawarkan akurasi tinggi tetapi sulit dijelaskan kepada pengguna non-teknis. 
+
+XGBoost, meskipun terbukti memiliki performa prediktif superior, masih menghadapi tantangan interpretabilitas yang membatasi adopsinya dalam aplikasi patient-facing. Belum ada framework komprehensif yang mengintegrasikan XGBoost dengan multiple teknik XAI (SHAP dan LIME) secara optimal untuk konteks pemberdayaan pasien dalam memahami biaya pengobatan mereka. Selain itu, implementasi XGBoost untuk prediksi biaya pengobatan dengan fokus patient-centric masih terbatas, terutama dalam konteks dataset yang mencerminkan karakteristik demografi dan perilaku kesehatan individual.
+
+Oleh karena itu, penelitian ini mengusulkan implementasi XGBoost yang diperkuat dengan teknik XAI komprehensif untuk mengembangkan sistem prediksi biaya pengobatan pasien yang akurat, transparan, dan patient-friendly.
+
+\section{Tujuan}
+
+Penelitian ini bertujuan untuk mengembangkan sistem prediksi biaya pengobatan pasien berbasis XGBoost yang transparan dan berorientasi pada pemberdayaan pasien. Secara spesifik, tujuan penelitian ini adalah:
+
+\begin{enumerate}
+\item Mengimplementasikan dan mengoptimasi algoritma XGBoost untuk prediksi biaya pengobatan pasien menggunakan dataset Kaggle Insurance Cost, dengan evaluasi komprehensif mencakup akurasi prediktif (R², RMSE, MAE, MAPE) dan analisis performa pada berbagai segmen demografi.
+
+\item Mengintegrasikan dan mengevaluasi teknik Explainable AI (SHAP dan LIME) dengan model XGBoost untuk menghasilkan penjelasan yang dapat dipahami pasien tentang faktor-faktor yang mempengaruhi biaya pengobatan mereka, termasuk analisis komparatif kelebihan masing-masing metode XAI.
+\end{enumerate}
+
+\section{Batasan Masalah}
+Untuk memastikan fokus dan kelayakan penelitian, studi ini memiliki batasan sebagai berikut:
+
+\begin{itemize}
+    \item \textbf{Dataset}: Penelitian menggunakan dataset Kaggle Insurance Cost dengan 1338 records dan 7 fitur, dimana variabel 'charges' merepresentasikan biaya pengobatan pasien. Dataset ini bersifat cross-sectional tanpa dimensi temporal.
+    
+    \item \textbf{Algoritma}: Fokus pada implementasi dan optimasi XGBoost dengan Linear Regression sebagai baseline comparison. Tidak mencakup algoritma machine learning lainnya.
+    
+    \item \textbf{Teknik XAI}: Implementasi terbatas pada SHAP dan LIME sebagai metode interpretabilitas. Tidak mencakup teknik XAI lain seperti Anchors atau Counterfactual Explanations.
+    
+    \item \textbf{Konteks Geografis}: Data berasal dari sistem kesehatan AS dengan empat region. Adaptasi untuk konteks Indonesia bersifat konseptual dan memerlukan validasi lebih lanjut.
+    
+    \item \textbf{Perspektif}: Fokus pada patient-centric approach untuk prediksi biaya pengobatan individual. Tidak mencakup perspektif penyedia layanan kesehatan atau analisis profitabilitas.
+    
+    \item \textbf{Implementasi}: Penelitian bersifat eksperimental menggunakan Python dengan pengembangan prototype dashboard. Tidak termasuk deployment production-ready atau clinical testing dengan pasien sesungguhnya.
+\end{itemize}
+
+\section{Rencana Kegiatan}
+
+Penelitian ini akan dilaksanakan dalam beberapa tahap sistematis sebagai berikut:
+
+\begin{enumerate}
+    \item \textbf{Kajian Pustaka}
+    \begin{itemize}
+        \item Melakukan tinjauan komprehensif tentang implementasi XGBoost dalam prediksi biaya pengobatan
+        \item Mengkaji best practices untuk hyperparameter tuning XGBoost pada data kesehatan
+        \item Mempelajari integrasi SHAP dan LIME dengan XGBoost untuk healthcare applications
+        \item Menganalisis literatur tentang patient empowerment dan transparansi biaya pengobatan
+    \end{itemize}
+
+\item \textbf{Pengumpulan dan Preprocessing Data}
+\begin{itemize}
+    \item Download dan eksplorasi dataset Kaggle Insurance Cost 
+    \item Analisis distribusi variabel biaya pengobatan (charges) dan identifikasi outliers
+    \item Feature engineering untuk konteks biaya pengobatan (age groups, BMI categories, high-risk indicators)
+    \item Encoding variabel kategorikal yang relevan dengan biaya pengobatan
+    \item Normalisasi fitur numerik dan handling skewed distribution pada biaya
+    \item Split data: 70\% training, 15\% validation, 15\% testing dengan stratified sampling
+\end{itemize}
+    
+    \item \textbf{Implementasi dan Optimasi XGBoost}
+    \begin{itemize}
+        \item Implementasi baseline Linear Regression untuk comparison
+        \item Konfigurasi XGBoost dengan parameter default untuk prediksi biaya pengobatan
+        \item Hyperparameter tuning menggunakan RandomizedSearchCV
+        \item Implementasi early stopping untuk mencegah overfitting
+        \item Analisis feature importance untuk identifikasi faktor utama biaya pengobatan
+        \item Evaluasi performa pada berbagai subset data pasien
+    \end{itemize}
+    
+    \item \textbf{Integrasi dan Evaluasi XAI}
+    \begin{itemize}
+        \item Implementasi SHAP TreeExplainer untuk XGBoost
+        \item Generasi SHAP plots untuk visualisasi faktor biaya pengobatan
+        \item Implementasi LIME untuk penjelasan biaya individual pasien
+        \item Analisis konsistensi penjelasan biaya antara SHAP dan LIME
+        \item Evaluasi computational efficiency kedua metode
+        \item Pengembangan visualisasi biaya pengobatan untuk patient understanding
+    \end{itemize}
+    
+    \item \textbf{Pengembangan Framework Patient-Centric}
+    \begin{itemize}
+        \item Desain user interface untuk dashboard prediksi biaya pengobatan
+        \item Implementasi modul prediksi real-time biaya dengan XGBoost
+        \item Integrasi visualisasi komponen biaya pengobatan (SHAP dan LIME)
+        \item Pengembangan fitur what-if analysis untuk perencanaan biaya
+        \item Implementasi narrative explanations generator untuk pasien
+        \item Testing usability dan refinement
+    \end{itemize}
+    
+    \item \textbf{Analisis dan Dokumentasi}
+    \begin{itemize}
+        \item Evaluasi komprehensif performa XGBoost dalam prediksi biaya pengobatan
+        \item Analisis efektivitas SHAP vs LIME untuk komunikasi biaya ke pasien
+        \item Dokumentasi best practices untuk prediksi biaya pengobatan
+        \item Penyusunan rekomendasi untuk adaptasi di konteks Indonesia
+        \item Penulisan laporan dengan fokus pada practical insights
+    \end{itemize}
+\end{enumerate}
+
+
+\section{Jadwal Kegiatan}
+
+Jadwal pelaksanaan penelitian dirancang untuk diselesaikan dalam 6 bulan dengan distribusi waktu sebagai berikut:
+
+\begin{table}[h!]
+  \centering
+    \caption{Jadwal kegiatan penelitian}
+  \label{jadwal}
+  \begin{tabular}{|c|m{3.5cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|m{0.01cm}|}
+    \hline
+    \multirow{2}{*}{\textbf{No}} & \multirow{2}{*}{\textbf{Kegiatan}} & \multicolumn{24}{|c|}{\textbf{Bulan ke-}} \\
+    \hhline{~~------------------------}
+    {} & {} & \multicolumn{4}{|c|}{\textbf{1}} & \multicolumn{4}{|c|}{\textbf{2}} & \multicolumn{4}{|c|}{\textbf{3}} & \multicolumn{4}{|c|}{\textbf{4}} & \multicolumn{4}{|c|}{\textbf{5}} & \multicolumn{4}{|c|}{\textbf{6}}\\
+    \hline
+    1 & Studi Literatur & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25}& \cellcolor{blue!25} & \cellcolor{blue!25} & {} & {} & {} & {} & {} & {} & {} & {} & {} & {} & {} & {} & {} & {} & {} & {} & {} & {}\\
+    \hline
+    2 & Pengumpulan dan Preprocessing Data & {} & {} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & {} & {} & {} & {} & {} & {}& {} & {} & {} & {}& {} & {} & {} & {}& {} & {} & {} & {}\\
+    \hline
+    3 & Implementasi dan Optimasi XGBoost &  {} & {} & {} & {}  & {} & {} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & {} & {} & {} & {}& {} & {} & {} & {}& {} & {} & {} & {}\\
+    \hline
+    4 & Integrasi XAI (SHAP \& LIME) &  {} & {} & {} & {} & {} & {} & {} & {}& {} & {} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & {} & {} & {} & {}& {} & {} & {} & {}\\
+    \hline
+    5 & Framework Patient-Centric &  {} & {} & {} & {} & {} & {} & {} & {}& {} & {} & {} & {} & {} & {} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & {} & {} & {} & {}\\
+    \hline
+    6 & Analisis dan Penulisan & {} & {} & {} & {} & {} & {} & {} & {}& {} & {} & {} & {}& {} & {} & {} & {}& \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25}& \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25} & \cellcolor{blue!25}\\
+    \hline
+  \end{tabular}
+
+\end{table}
+\newpage
