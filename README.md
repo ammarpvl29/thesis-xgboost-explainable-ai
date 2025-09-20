@@ -7,11 +7,7 @@
 ## Project Overview
 This thesis project implements **XGBoost with Explainable AI (SHAP & LIME)** for patient treatment cost prediction using the Kaggle Insurance Cost dataset. The goal is to create transparent, interpretable healthcare cost predictions that empower patients in their decision-making process.
 
-<<<<<<< HEAD
 ## 🎯 Current Status: Phase 2 - Baseline Model Completed ✅
-=======
-## 🎯 Current Status: Phase 1 - Data Analysis Completed ✅
->>>>>>> 3b1106dba3eaaf609d3058c1fc38516f256f961c
 
 ### Phase 1 Key Discoveries:
 - **🚬 Smoking Status**: Dominant predictor (r=0.787) - smokers pay **280% more** than non-smokers
@@ -19,15 +15,11 @@ This thesis project implements **XGBoost with Explainable AI (SHAP & LIME)** for
 - **🔗 Critical Interaction**: BMI × Smoking creates highest cost segment (obese smokers: $41,558 average)
 - **📈 Distribution**: Highly right-skewed charges ($1,121 - $63,770) - log transformation needed
 
-<<<<<<< HEAD
 ### Phase 2 Baseline Results ✅:
 - **🎯 R² Score: 0.8637** (86.37% variance explained) - **EXCEEDS THESIS TARGET >0.85!**
 - **💰 RMSE: $4,120.52** - Excellent prediction accuracy
 - **📊 MAE: $2,260.53** - Strong average prediction performance
 - **🔍 Top Predictors**: high_risk (coef: 6,353), smoker (coef: 5,274), age (coef: 4,061)
-
-=======
->>>>>>> 3b1106dba3eaaf609d3058c1fc38516f256f961c
 ## 📊 Dataset Characteristics
 - **Source:** Kaggle Insurance Cost Dataset
 - **Records:** 1,338 patients
@@ -42,7 +34,6 @@ This thesis project implements **XGBoost with Explainable AI (SHAP & LIME)** for
 4. **Children**: 0.068 👶 Minimal impact
 5. **Sex**: 0.057 👥 Very weak
 6. **Region**: 0.006 🌍 Negligible
-<<<<<<< HEAD
 
 ## 📋 Project Phases
 - [x] **Phase 0:** Environment Setup & GitHub Repository ✅
@@ -76,28 +67,6 @@ python notebooks/02_baseline_linear_regression.py
 - ✅ **Feature importance analysis** confirming smoking dominance
 - ✅ **Model artifacts saved** to `results/models/baseline_model_summary.json`
 - ✅ **Visualizations generated**: feature importance & prediction evaluation plots
-=======
-
-## 📋 Project Phases
-- [x] **Phase 0:** Environment Setup & GitHub Repository ✅
-- [x] **Phase 1:** Data Analysis & EDA ✅ **(COMPLETED)**
-  - [x] Comprehensive exploratory data analysis
-  - [x] Feature correlation and interaction analysis  
-  - [x] Statistical testing and outlier detection
-  - [x] Feature engineering and data preprocessing
-  - [x] Chapter 4 thesis documentation
-- [ ] **Phase 2:** XGBoost Implementation (Week 2) 🔄 **(NEXT)**
-- [ ] **Phase 3:** Explainable AI Integration (Week 3)
-- [ ] **Phase 4:** Dashboard Development (Week 4)
-- [ ] **Phase 5:** Documentation & Paper Completion (Week 5-6)
-
-## 🚀 Quick Start
-
-### Running the EDA Analysis
-```bash
-# 1. Clone and setup
-git clone https://github.com/ammarpvl29/thesis-xgboost-explainable-ai.git
->>>>>>> 3b1106dba3eaaf609d3058c1fc38516f256f961c
 cd thesis-xgboost-explainable-ai
 python -m venv venv
 venv\Scripts\activate
@@ -147,7 +116,6 @@ thesis-xgboost-explainable-ai/
 │   ├── raw/                    # Original insurance.csv dataset
 │   └── processed/              # Feature-engineered data ✅
 ├── notebooks/
-<<<<<<< HEAD
 │   ├── 01_data_exploration.py  # Complete EDA analysis ✅
 │   └── 02_baseline_linear_regression.py # Baseline model (R²=0.8637) ✅
 ├── paper/
@@ -155,13 +123,6 @@ thesis-xgboost-explainable-ai/
 ├── results/
 │   ├── plots/                  # Generated visualizations ✅
 │   └── models/                 # Model artifacts & summaries ✅
-=======
-│   └── 01_data_exploration.py  # Complete EDA analysis ✅
-├── paper/
-│   └── Hasil-Penelitian.tex    # Chapter 4 thesis draft ✅
-├── results/
-│   └── plots/                  # Generated visualizations ✅
->>>>>>> 3b1106dba3eaaf609d3058c1fc38516f256f961c
 ├── src/                        # Future: XGBoost & XAI modules
 ├── CLAUDE.md                   # Project documentation ✅
 └── README.md                   # This file ✅
@@ -175,7 +136,6 @@ thesis-xgboost-explainable-ai/
 - **High-Cost Cases**: 100% of top 5% most expensive cases are smokers (67/67)
 - **Critical Interaction**: BMI × Smoking multiplier effect (obese smokers: $41,558)
 
-<<<<<<< HEAD
 ### 🎯 Baseline Model Performance:
 - **R² Score: 0.8637** (86.37% variance explained) - **EXCEEDS THESIS TARGET >0.85**
 - **Top Features**: high_risk (coef: 6,353), smoker (coef: 5,274), age (coef: 4,061)
@@ -184,12 +144,7 @@ thesis-xgboost-explainable-ai/
 
 ### 🎯 XGBoost Target:
 - **Target Performance**: R² > 0.87 to show meaningful improvement over baseline
-- **XAI Potential**: Clear feature hierarchy will create consistent, actionable explanations  
-=======
-### 🎯 Model Readiness:
-- **XGBoost Advantages**: Clear feature hierarchy, non-linear interactions
-- **XAI Potential**: Smoking dominance will create consistent, actionable explanations  
->>>>>>> 3b1106dba3eaaf609d3058c1fc38516f256f961c
+- **XAI Potential**: Clear feature hierarchy will create consistent, actionable explanations
 - **Patient Focus**: Lifestyle-based cost drivers enable meaningful interventions
 
 ## 🔬 Technical Details
@@ -211,11 +166,11 @@ thesis-xgboost-explainable-ai/
 - **Methodology**: Comprehensive EDA following academic standards
 - **Visualizations**: Statistical plots saved in `results/plots/`
 
-## 🔄 Next Steps (Phase 2)
-- [ ] Implement baseline Linear Regression model
-- [ ] Develop optimized XGBoost model with hyperparameter tuning
-- [ ] Performance comparison and evaluation metrics
-- [ ] Prepare for SHAP/LIME integration in Phase 3
+## 🔄 Next Steps (Phase 3)
+- [ ] Implement XGBoost core model (Algorithm 3)
+- [ ] Hyperparameter optimization with RandomizedSearchCV
+- [ ] Performance comparison: XGBoost vs Baseline (target R² > 0.87)
+- [ ] Prepare for SHAP/LIME integration in Phase 4
 
 ## 📚 Dependencies
 ```
@@ -238,8 +193,4 @@ This research contributes to healthcare AI transparency by combining:
 
 **University**: Universitas Telkom, Fakultas Informatika  
 **Thesis Advisor**: [To be updated]  
-<<<<<<< HEAD
 **Expected Completion**: 2025
-=======
-**Expected Completion**: 2025
->>>>>>> 3b1106dba3eaaf609d3058c1fc38516f256f961c
