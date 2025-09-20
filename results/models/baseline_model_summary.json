@@ -1,0 +1,45 @@
+{
+  "model_type": "Linear Regression with StandardScaler",
+  "features_used": 17,
+  "feature_names": [
+    "age",
+    "sex",
+    "bmi",
+    "children",
+    "smoker",
+    "high_risk",
+    "family_size",
+    "region_northwest",
+    "region_southeast",
+    "region_southwest",
+    "bmi_category_Obese",
+    "bmi_category_Overweight",
+    "bmi_category_Underweight",
+    "bmi_category_Unknown",
+    "age_group_30-39",
+    "age_group_40-49",
+    "age_group_50-64"
+  ],
+  "performance_metrics": {
+    "training": {
+      "r2_score": 0.8696819636472807,
+      "rmse": 4414.076248802666,
+      "mae": 2443.688280217447,
+      "mape": 26.45338571867611
+    },
+    "validation": {
+      "r2_score": 0.860339776927673,
+      "rmse": 4639.592040381337,
+      "mae": 2623.435357473881,
+      "mape": 28.48752896418209
+    },
+    "training_time": 0.028992,
+    "test": {
+      "r2_score": 0.8636931459790063,
+      "rmse": 4120.5183591871455,
+      "mae": 2260.526722288337,
+      "mape": 26.032677928961395
+    }
+  },
+  "timestamp": "2025-09-20 14:03:52"
+}

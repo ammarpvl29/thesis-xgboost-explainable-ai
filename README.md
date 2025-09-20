@@ -7,13 +7,19 @@
 ## Project Overview
 This thesis project implements **XGBoost with Explainable AI (SHAP & LIME)** for patient treatment cost prediction using the Kaggle Insurance Cost dataset. The goal is to create transparent, interpretable healthcare cost predictions that empower patients in their decision-making process.
 
-## 🎯 Current Status: Phase 1 - Data Analysis Completed ✅
+## 🎯 Current Status: Phase 2 - Baseline Model Completed ✅
 
 ### Phase 1 Key Discoveries:
 - **🚬 Smoking Status**: Dominant predictor (r=0.787) - smokers pay **280% more** than non-smokers
 - **📊 Dataset Quality**: 1,338 records with minimal missing data (0.22%)
 - **🔗 Critical Interaction**: BMI × Smoking creates highest cost segment (obese smokers: $41,558 average)
 - **📈 Distribution**: Highly right-skewed charges ($1,121 - $63,770) - log transformation needed
+
+### Phase 2 Baseline Results ✅:
+- **🎯 R² Score: 0.8637** (86.37% variance explained) - **EXCEEDS THESIS TARGET >0.85!**
+- **💰 RMSE: $4,120.52** - Excellent prediction accuracy
+- **📊 MAE: $2,260.53** - Strong average prediction performance
+- **🔍 Top Predictors**: high_risk (coef: 6,353), smoker (coef: 5,274), age (coef: 4,061)
 
 ## 📊 Dataset Characteristics
 - **Source:** Kaggle Insurance Cost Dataset
@@ -38,17 +44,30 @@ This thesis project implements **XGBoost with Explainable AI (SHAP & LIME)** for
   - [x] Statistical testing and outlier detection
   - [x] Feature engineering and data preprocessing
   - [x] Chapter 4 thesis documentation
-- [ ] **Phase 2:** XGBoost Implementation (Week 2) 🔄 **(NEXT)**
-- [ ] **Phase 3:** Explainable AI Integration (Week 3)
-- [ ] **Phase 4:** Dashboard Development (Week 4)
-- [ ] **Phase 5:** Documentation & Paper Completion (Week 5-6)
+- [x] **Phase 2:** Baseline Linear Regression ✅ **(COMPLETED)**
+  - [x] Algorithm 2 implementation with R² = 0.8637
+  - [x] Feature importance analysis (17 engineered features)
+  - [x] Performance evaluation exceeding thesis targets
+  - [x] Baseline benchmark established for XGBoost comparison
+- [ ] **Phase 3:** XGBoost Implementation 🔄 **(NEXT)**
+- [ ] **Phase 4:** Explainable AI Integration (SHAP & LIME)
+- [ ] **Phase 5:** Dashboard Development
+- [ ] **Phase 6:** Documentation & Paper Completion
 
 ## 🚀 Quick Start
 
-### Running the EDA Analysis
+### Running the Baseline Model
 ```bash
-# 1. Clone and setup
-git clone https://github.com/ammarpvl29/thesis-xgboost-explainable-ai.git
+# Run baseline Linear Regression implementation
+python notebooks/02_baseline_linear_regression.py
+```
+
+**Expected Outcome:**
+- ✅ **R² Score: 0.8637** (86.37% variance explained) - exceeds thesis target
+- ✅ **RMSE: $4,120.52** with strong prediction accuracy
+- ✅ **Feature importance analysis** confirming smoking dominance
+- ✅ **Model artifacts saved** to `results/models/baseline_model_summary.json`
+- ✅ **Visualizations generated**: feature importance & prediction evaluation plots
 cd thesis-xgboost-explainable-ai
 python -m venv venv
 venv\Scripts\activate
@@ -98,11 +117,13 @@ thesis-xgboost-explainable-ai/
 │   ├── raw/                    # Original insurance.csv dataset
 │   └── processed/              # Feature-engineered data ✅
 ├── notebooks/
-│   └── 01_data_exploration.py  # Complete EDA analysis ✅
+│   ├── 01_data_exploration.py  # Complete EDA analysis ✅
+│   └── 02_baseline_linear_regression.py # Baseline model (R²=0.8637) ✅
 ├── paper/
-│   └── Hasil-Penelitian.tex    # Chapter 4 thesis draft ✅
+│   └── Hasil-Penelitian.tex    # Chapter 4 with baseline results ✅
 ├── results/
-│   └── plots/                  # Generated visualizations ✅
+│   ├── plots/                  # Generated visualizations ✅
+│   └── models/                 # Model artifacts & summaries ✅
 ├── src/                        # Future: XGBoost & XAI modules
 ├── CLAUDE.md                   # Project documentation ✅
 └── README.md                   # This file ✅
@@ -116,9 +137,15 @@ thesis-xgboost-explainable-ai/
 - **High-Cost Cases**: 100% of top 5% most expensive cases are smokers (67/67)
 - **Critical Interaction**: BMI × Smoking multiplier effect (obese smokers: $41,558)
 
-### 🎯 Model Readiness:
-- **XGBoost Advantages**: Clear feature hierarchy, non-linear interactions
-- **XAI Potential**: Smoking dominance will create consistent, actionable explanations  
+### 🎯 Baseline Model Performance:
+- **R² Score: 0.8637** (86.37% variance explained) - **EXCEEDS THESIS TARGET >0.85**
+- **Top Features**: high_risk (coef: 6,353), smoker (coef: 5,274), age (coef: 4,061)
+- **Prediction Accuracy**: RMSE $4,120.52, MAE $2,260.53, MAPE 26.03%
+- **Cross-Validation**: Stable R² = 0.8603 (±0.0867) across 5 folds
+
+### 🎯 XGBoost Target:
+- **Target Performance**: R² > 0.87 to show meaningful improvement over baseline
+- **XAI Potential**: Clear feature hierarchy will create consistent, actionable explanations  
 - **Patient Focus**: Lifestyle-based cost drivers enable meaningful interventions
 
 ## 🔬 Technical Details

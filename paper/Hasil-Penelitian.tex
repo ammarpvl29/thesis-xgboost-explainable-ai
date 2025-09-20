@@ -402,6 +402,64 @@ Penelitian ini mengkonfirmasi dan memperluas temuan sebelumnya:
     \item \textbf{XAI readiness}: Dataset characteristics yang mendukung interpretable modeling
 \end{enumerate}
 
+\section{Implementasi Model Baseline}
+\label{sec:baseline-model}
+
+\subsection{Hasil Model Linear Regression}
+\label{subsec:baseline-results}
+
+Sebagai langkah implementasi Algorithm 2 dari metodologi penelitian, model Linear Regression baseline telah diimplementasikan dengan hasil yang mengejutkan dan melampaui ekspektasi:
+
+\subsubsection{Performance Metrics}
+\begin{table}[H]
+\centering
+\caption{Performance Baseline Linear Regression Model}
+\label{tab:baseline-performance}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Metric} & \textbf{Training} & \textbf{Test} \\
+\hline
+R² Score & 0.8697 & \textbf{0.8637} \\
+RMSE & \$4,414.08 & \$4,120.52 \\
+MAE & \$2,443.69 & \$2,260.53 \\
+MAPE & 26.45\% & 26.03\% \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Temuan Kunci}: Model baseline Linear Regression mencapai R² = 0.8637 (86.37\%), yang \textbf{telah melampaui target thesis R² > 0.85} sebelum implementasi XGBoost. Hal ini menunjukkan kualitas feature engineering yang sangat baik dan potensi XGBoost untuk mencapai performance yang lebih tinggi lagi.
+
+\subsubsection{Feature Importance Analysis}
+Analisis koefisien Linear Regression mengkonfirmasi temuan EDA:
+
+\begin{table}[H]
+\centering
+\caption{Top 5 Feature Importance dari Baseline Model}
+\label{tab:baseline-features}
+\begin{tabular}{|l|c|c|}
+\hline
+\textbf{Feature} & \textbf{Coefficient} & \textbf{Interpretation} \\
+\hline
+high\_risk & 6,353.96 & Obese smokers premium \\
+smoker & 5,274.57 & Smoking penalty \\
+age & 4,061.43 & Age progression effect \\
+age\_group\_40-49 & -602.48 & Middle-age adjustment \\
+bmi & 487.47 & BMI linear effect \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Validasi Cross-Validation}
+5-Fold Cross-Validation menghasilkan R² = 0.8603 (±0.0867), mengkonfirmasi stabilitas model dan generalizability yang baik.
+
+\subsubsection{Implikasi untuk XGBoost Implementation}
+\begin{enumerate}
+    \item \textbf{High Baseline}: XGBoost harus mencapai R² > 0.87 untuk menunjukkan improvement yang signifikan
+    \item \textbf{Feature Validation}: Konfirmasi high\_risk dan smoker sebagai predictors utama
+    \item \textbf{Non-linear Potential}: Opportunity untuk XGBoost menangkap interaction effects yang lebih kompleks
+    \item \textbf{Benchmark Established}: Solid foundation untuk comparative analysis
+\end{enumerate}
+
 \section{Keterbatasan dan Rekomendasi}
 \label{sec:keterbatasan}
 
