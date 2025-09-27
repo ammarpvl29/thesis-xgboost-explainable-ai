@@ -1,0 +1,61 @@
+{
+  "model_type": "XGBoost Regressor - Baseline (No Optimization)",
+  "algorithm": "Algorithm 3 - XGBoost Baseline Implementation",
+  "optimization_status": "baseline_only",
+  "features_used": 10,
+  "feature_names": [
+    "age",
+    "sex",
+    "bmi",
+    "children",
+    "smoker",
+    "region",
+    "bmi_category",
+    "age_group",
+    "high_risk",
+    "family_size"
+  ],
+  "baseline_parameters": {
+    "n_estimators": 100,
+    "max_depth": 6,
+    "learning_rate": 0.1,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "reg_alpha": 0,
+    "reg_lambda": 1,
+    "min_child_weight": 1,
+    "gamma": 0
+  },
+  "performance_metrics": {
+    "training": {
+      "r2_score": 0.9746965612849007,
+      "rmse": 1945.0346384712268,
+      "mae": 1096.5913916281008,
+      "mape": 13.925930432147421
+    },
+    "validation": {
+      "r2_score": 0.8366818330145049,
+      "rmse": 5017.191495879653,
+      "mae": 2806.912443641946,
+      "mape": 34.370715787109496
+    },
+    "test": {
+      "r2_score": 0.8308979249442493,
+      "rmse": 4589.522198301544,
+      "mae": 2565.8166985177627,
+      "mape": 32.155675363438064
+    }
+  },
+  "linear_regression_comparison": {
+    "baseline_r2": 0.8636931459790063,
+    "xgboost_r2": 0.8308979249442493,
+    "improvement": -0.03279522103475696,
+    "relative_improvement_percent": -3.7970917318769724,
+    "target_r2": 0.87,
+    "target_achieved": false
+  },
+  "training_time_seconds": 0.09073495864868164,
+  "professor_target_achievement": false,
+  "next_step": "hyperparameter_optimization",
+  "timestamp": "2025-09-27 17:26:37"
+}

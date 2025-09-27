@@ -427,7 +427,7 @@ MAPE & 26.45\% & 26.03\% \\
 \end{tabular}
 \end{table}
 
-\textbf{Temuan Kunci}: Model baseline Linear Regression mencapai R² = 0.8637 (86.37\%), yang \textbf{telah melampaui target thesis R² > 0.85} sebelum implementasi XGBoost. Hal ini menunjukkan kualitas feature engineering yang sangat baik dan potensi XGBoost untuk mencapai performance yang lebih tinggi lagi.
+\textbf{Temuan Kunci}: Model baseline Linear Regression mencapai R² = 0.8637 (86.37\%), yang \textbf{telah melampaui target thesis R² > 0.85} sebelum implementasi XGBoost. Hal ini menunjukkan kualitas feature engineering yang sangat baik dan menetapkan benchmark tinggi untuk XGBoost.
 
 \subsubsection{Feature Importance Analysis}
 Analisis koefisien Linear Regression mengkonfirmasi temuan EDA:
@@ -452,12 +452,94 @@ bmi & 487.47 & BMI linear effect \\
 \subsubsection{Validasi Cross-Validation}
 5-Fold Cross-Validation menghasilkan R² = 0.8603 (±0.0867), mengkonfirmasi stabilitas model dan generalizability yang baik.
 
-\subsubsection{Implikasi untuk XGBoost Implementation}
+\subsection{Implementasi XGBoost Baseline}
+\label{subsec:xgboost-baseline}
+
+Sebagai langkah implementasi Algorithm 3 dari metodologi penelitian, model XGBoost baseline telah diimplementasikan tanpa optimasi hyperparameter untuk menetapkan performa dasar sesuai arahan pembimbing.
+
+\subsubsection{Konfigurasi XGBoost Baseline}
+\begin{table}[H]
+\centering
+\caption{Parameter XGBoost Baseline}
+\label{tab:xgboost-baseline-params}
+\begin{tabular}{|l|c|l|}
+\hline
+\textbf{Parameter} & \textbf{Value} & \textbf{Justification} \\
+\hline
+n\_estimators & 100 & Standard number of trees \\
+max\_depth & 6 & Default XGBoost depth \\
+learning\_rate & 0.1 & Default learning rate \\
+subsample & 0.8 & Slight regularization \\
+colsample\_bytree & 0.8 & Feature sampling \\
+reg\_alpha & 0 & No L1 regularization \\
+reg\_lambda & 1 & Default L2 regularization \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Hasil Performa XGBoost Baseline}
+\begin{table}[H]
+\centering
+\caption{Perbandingan Performa: Linear Regression vs XGBoost Baseline}
+\label{tab:baseline-comparison}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Metric} & \textbf{Linear Regression} & \textbf{XGBoost Baseline} & \textbf{Perubahan} \\
+\hline
+R² Score & \textbf{0.8637} & 0.8309 & -0.0328 \\
+RMSE & \$4,120.52 & \$4,589.52 & +11.4\% \\
+MAE & \$2,260.53 & \$2,565.82 & +13.5\% \\
+MAPE & 26.03\% & 32.16\% & +6.13pp \\
+Training Time & 0.029s & 0.09s & +3x \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Analisis Kritis Hasil XGBoost Baseline}
+
+\textbf{Temuan Mengejutkan}: XGBoost baseline menunjukkan performa yang \textbf{lebih rendah} dibanding Linear Regression pada semua metrik utama. Hal ini mengindikasikan beberapa faktor penting:
+
 \begin{enumerate}
-    \item \textbf{High Baseline}: XGBoost harus mencapai R² > 0.87 untuk menunjukkan improvement yang signifikan
-    \item \textbf{Feature Validation}: Konfirmasi high\_risk dan smoker sebagai predictors utama
-    \item \textbf{Non-linear Potential}: Opportunity untuk XGBoost menangkap interaction effects yang lebih kompleks
-    \item \textbf{Benchmark Established}: Solid foundation untuk comparative analysis
+    \item \textbf{Overfitting Indication}: Training R² = 0.9747 vs Test R² = 0.8309 menunjukkan gap signifikan yang mengindikasikan overfitting pada data training.
+
+    \item \textbf{Parameter Default Tidak Optimal}: Parameter default XGBoost tidak sesuai untuk karakteristik data insurance cost dengan distribusi yang highly skewed.
+
+    \item \textbf{Kebutuhan Optimasi Hyperparameter}: Hasil ini menegaskan pentingnya hyperparameter tuning untuk mencapai performa optimal XGBoost.
+
+    \item \textbf{Linear Relationship Dominance}: Data menunjukkan bahwa hubungan linear cukup kuat, sehingga kompleksitas tambahan XGBoost tanpa tuning malah merugikan.
+\end{enumerate}
+
+\subsubsection{Feature Importance Comparison}
+\begin{table}[H]
+\centering
+\caption{Top 5 Feature Importance: Linear Regression vs XGBoost}
+\label{tab:feature-importance-comparison}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Rank} & \textbf{Linear Regression} & \textbf{XGBoost (Gain)} \\
+\hline
+1 & high\_risk & high\_risk \\
+2 & smoker & smoker \\
+3 & age & age\_group \\
+4 & age\_group\_40-49 & age \\
+5 & bmi & bmi \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Konsistensi Feature Importance}: Kedua model menunjukkan konsistensi dalam mengidentifikasi high\_risk dan smoker sebagai predictors utama, mengkonfirmasi validitas temuan EDA.
+
+\subsubsection{Implikasi untuk Hyperparameter Optimization}
+\begin{enumerate}
+    \item \textbf{Critical Need for Tuning}: Hasil baseline menegaskan bahwa hyperparameter optimization bukan optional melainkan \textbf{essential} untuk XGBoost performance.
+
+    \item \textbf{Regularization Focus}: Perlu fokus pada parameter regularization (reg\_alpha, reg\_lambda, gamma) untuk mengatasi overfitting.
+
+    \item \textbf{Learning Rate Adjustment}: Learning rate mungkin perlu dikurangi untuk learning yang lebih gradual.
+
+    \item \textbf{Tree Complexity}: Max\_depth dan min\_child\_weight perlu disesuaikan untuk data insurance yang relatif kecil.
+
+    \item \textbf{Target Achievement Strategy}: Untuk mencapai target R² > 0.87, diperlukan systematic hyperparameter search dengan fokus pada bias-variance trade-off.
 \end{enumerate}
 
 \section{Keterbatasan dan Rekomendasi}
