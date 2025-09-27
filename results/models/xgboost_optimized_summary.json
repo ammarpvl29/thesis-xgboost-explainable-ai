@@ -1,0 +1,92 @@
+{
+  "model_type": "XGBoost Regressor - Enhanced with Feature Interactions",
+  "optimization_strategy": "Quick Win Strategy: Feature interactions + Higher n_estimators + Optimized depth",
+  "optimization_method": "RandomizedSearchCV with 400 iterations",
+  "enhancement_features": {
+    "feature_interactions_added": 5,
+    "total_features": 15,
+    "original_features": 10,
+    "interaction_types": [
+      "smoker_bmi_interaction",
+      "smoker_age_interaction",
+      "high_risk_age_interaction",
+      "bmi_category_age_interaction",
+      "family_age_interaction"
+    ]
+  },
+  "hyperparameter_enhancements": {
+    "n_estimators_range": "300-1000 (vs 100-500 previous)",
+    "max_depth_range": "3-5 (vs 3-6 previous)",
+    "early_stopping_rounds": 50,
+    "iterations_used": 400
+  },
+  "features_used": 15,
+  "feature_names": [
+    "age",
+    "sex",
+    "bmi",
+    "children",
+    "smoker",
+    "region",
+    "bmi_category",
+    "age_group",
+    "high_risk",
+    "family_size",
+    "smoker_bmi_interaction",
+    "smoker_age_interaction",
+    "high_risk_age_interaction",
+    "bmi_category_age_interaction",
+    "family_age_interaction"
+  ],
+  "best_hyperparameters": {
+    "subsample": 0.6,
+    "reg_lambda": 1.0,
+    "reg_alpha": 1.0,
+    "n_estimators": 300,
+    "min_child_weight": 10,
+    "max_depth": 3,
+    "learning_rate": 0.03,
+    "gamma": 1.0,
+    "colsample_bytree": 0.8
+  },
+  "performance_metrics": {
+    "training": {
+      "r2_score": 0.8783689026014215,
+      "rmse": 4264.419099295206,
+      "mae": 2472.88350555841,
+      "mape": 32.84483057717491
+    },
+    "validation": {
+      "r2_score": 0.8604291093825822,
+      "rmse": 4638.107965545092,
+      "mae": 2726.753953833178,
+      "mape": 35.63790980610329
+    },
+    "test": {
+      "r2_score": 0.8618192827689629,
+      "rmse": 4148.744862484684,
+      "mae": 2310.4211993738336,
+      "mape": 32.687016457442915
+    }
+  },
+  "baseline_comparison": {
+    "linear_regression_r2": 0.8636931459790063,
+    "xgboost_baseline_r2": 0.8308979249442493,
+    "enhanced_xgboost_r2": 0.8618192827689629,
+    "improvement_vs_linear": -0.0018738632100433472,
+    "improvement_vs_baseline": 0.030921357824713613
+  },
+  "target_achievement": {
+    "professor_target_0_86": true,
+    "thesis_target_0_87": false,
+    "beat_linear_regression": false
+  },
+  "optimization_time_minutes": 1.2875234802563986,
+  "overfitting_analysis": {
+    "train_r2": 0.8783689026014215,
+    "test_r2": 0.8618192827689629,
+    "overfitting_gap": 0.016549619832458617
+  },
+  "enhancement_summary": "feature_interactions + higher_n_estimators + optimized_depth",
+  "timestamp": "2025-09-27 18:07:34"
+}

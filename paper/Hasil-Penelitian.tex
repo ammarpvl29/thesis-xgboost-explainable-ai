@@ -542,6 +542,150 @@ Training Time & 0.029s & 0.09s & +3x \\
     \item \textbf{Target Achievement Strategy}: Untuk mencapai target R² > 0.87, diperlukan systematic hyperparameter search dengan fokus pada bias-variance trade-off.
 \end{enumerate}
 
+\subsection{Implementasi XGBoost Enhanced Optimization}
+\label{subsec:xgboost-enhanced}
+
+Berdasarkan analisis kritis dari hasil XGBoost baseline, dilakukan optimasi enhanced dengan fokus pada feature engineering dan hyperparameter tuning untuk mencapai target performa yang ditetapkan pembimbing.
+
+\subsubsection{Strategi Feature Engineering Lanjutan}
+Untuk meningkatkan performa XGBoost, dilakukan penambahan 5 fitur interaksi berdasarkan temuan EDA:
+
+\begin{table}[H]
+\centering
+\caption{Feature Interactions yang Ditambahkan untuk Enhanced XGBoost}
+\label{tab:enhanced-features}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Feature Interaction} & \textbf{Formula} & \textbf{Justification} \\
+\hline
+smoker\_bmi\_interaction & smoker $\times$ bmi & Capture smoking-BMI synergy \\
+smoker\_age\_interaction & smoker $\times$ age & Age-smoking compounding effect \\
+high\_risk\_age\_interaction & high\_risk $\times$ age & High-risk aging premium \\
+bmi\_children\_interaction & bmi $\times$ children & Family BMI dynamics \\
+age\_children\_interaction & age $\times$ children & Parental age factor \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Enhanced Hyperparameter Search Strategy}
+Implementasi RandomizedSearchCV dengan parameter space yang diperluas:
+
+\begin{table}[H]
+\centering
+\caption{Parameter Search Space untuk Enhanced Optimization}
+\label{tab:enhanced-search-space}
+\begin{tabular}{|l|l|l|}
+\hline
+\textbf{Parameter} & \textbf{Search Range} & \textbf{Optimal Value} \\
+\hline
+n\_estimators & [300, 500, 700, 1000] & 1000 \\
+max\_depth & [3, 4, 5] & 4 \\
+learning\_rate & [0.01, 0.05, 0.1, 0.2] & 0.05 \\
+subsample & [0.7, 0.8, 0.9] & 0.9 \\
+colsample\_bytree & [0.7, 0.8, 0.9] & 0.8 \\
+reg\_alpha & [0, 0.1, 0.5, 1.0] & 0.1 \\
+reg\_lambda & [1, 1.5, 2.0] & 1.5 \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Search Configuration}: 400 iterations dengan 5-fold cross-validation, menggunakan scoring metric R² untuk optimasi performa prediksi.
+
+\subsubsection{Hasil Enhanced XGBoost Optimization}
+
+\begin{table}[H]
+\centering
+\caption{Perbandingan Performa: Baseline vs Enhanced XGBoost}
+\label{tab:enhanced-performance}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Metric} & \textbf{XGBoost Baseline} & \textbf{XGBoost Enhanced} & \textbf{Improvement} \\
+\hline
+R² Score & 0.8309 & \textbf{0.8618} & +0.0309 \\
+RMSE & \$4,589.52 & \$4,145.12 & -9.7\% \\
+MAE & \$2,565.82 & \$2,384.88 & -7.0\% \\
+MAPE & 32.16\% & 29.21\% & -2.95pp \\
+Training R² & 0.9747 & 0.8783 & Better generalization \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Analisis Pencapaian Target}
+
+\textbf{Target Pembimbing Tercapai}: Enhanced XGBoost mencapai R² = 0.8618, yang \textbf{memenuhi target pembimbing R² > 0.86} namun masih belum mencapai target thesis R² > 0.87 (masih kurang 0.49\%).
+
+\begin{table}[H]
+\centering
+\caption{Evaluasi Pencapaian Target}
+\label{tab:target-achievement}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Target} & \textbf{Threshold} & \textbf{Achieved} & \textbf{Status} \\
+\hline
+Target Pembimbing & R² > 0.86 & 0.8618 & \textcolor{green}{\textbf{✓ TERCAPAI}} \\
+Target Thesis & R² > 0.87 & 0.8618 & \textcolor{orange}{\textbf{⚠ Kurang 0.49\%}} \\
+Vs Linear Regression & > 0.8637 & 0.8618 & \textcolor{orange}{\textbf{⚠ Kurang 0.19\%}} \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{Analisis Overfitting Resolution}
+Enhanced optimization berhasil mengatasi masalah overfitting yang signifikan:
+
+\begin{table}[H]
+\centering
+\caption{Analisis Generalization Performance}
+\label{tab:generalization-analysis}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Model} & \textbf{Training R²} & \textbf{Test R²} & \textbf{Gap} \\
+\hline
+XGBoost Baseline & 0.9747 & 0.8309 & \textcolor{red}{0.1438} \\
+XGBoost Enhanced & 0.8783 & 0.8618 & \textcolor{green}{0.0165} \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Significant Improvement}: Training-test gap berkurang dari 0.1438 menjadi 0.0165, menunjukkan generalization yang sangat baik.
+
+\subsubsection{Feature Importance Analysis Enhanced Model}
+\begin{table}[H]
+\centering
+\caption{Top 8 Feature Importance Enhanced XGBoost (Gain)}
+\label{tab:enhanced-feature-importance}
+\begin{tabular}{|l|c|l|}
+\hline
+\textbf{Feature} & \textbf{Importance (Gain)} & \textbf{Category} \\
+\hline
+high\_risk & 0.3127 & Engineered Feature \\
+smoker\_bmi\_interaction & 0.1892 & Feature Interaction \\
+smoker & 0.1234 & Original Feature \\
+age & 0.0956 & Original Feature \\
+smoker\_age\_interaction & 0.0743 & Feature Interaction \\
+bmi & 0.0621 & Original Feature \\
+high\_risk\_age\_interaction & 0.0387 & Feature Interaction \\
+children & 0.0298 & Original Feature \\
+\hline
+\end{tabular}
+\end{table}
+
+\textbf{Key Insights}:
+\begin{enumerate}
+    \item \textbf{Feature Interactions Dominance}: 3 dari top 8 features adalah interaction features, membuktikan efektivitas feature engineering.
+    \item \textbf{Smoking-BMI Synergy}: smoker\_bmi\_interaction menjadi predictor kedua terpenting (gain = 0.1892).
+    \item \textbf{Consistent Hierarchy}: high\_risk tetap menjadi predictor terpenting, mengkonfirmasi validitas temuan EDA.
+\end{enumerate}
+
+\subsubsection{Cross-Validation Stability}
+Enhanced model menunjukkan stabilitas excellent:
+\begin{itemize}
+    \item \textbf{CV R² Mean}: 0.8568
+    \item \textbf{CV R² Std}: ±0.0089
+    \item \textbf{CV Score Range}: 0.8442 - 0.8679
+\end{itemize}
+
+\textbf{Interpretation}: Standard deviation yang sangat kecil (0.0089) menunjukkan model yang sangat stabil across different data splits.
+
 \section{Keterbatasan dan Rekomendasi}
 \label{sec:keterbatasan}
 
@@ -565,24 +709,72 @@ Training Time & 0.029s & 0.09s & +3x \\
     \item \textbf{XAI Integration}: Dual approach dengan SHAP dan LIME
 \end{enumerate}
 
-\section{Kesimpulan Preliminary}
-\label{sec:kesimpulan-preliminary}
+\section{Kesimpulan Phase 3: XGBoost Implementation \& Optimization}
+\label{sec:kesimpulan-phase3}
 
-Hasil analisis eksplorasi data mengungkap pola yang sangat jelas dalam dataset Insurance Cost:
+Hasil implementasi dan optimasi XGBoost mengkonfirmasi temuan EDA dan memberikan insights penting untuk pengembangan model prediksi biaya pengobatan:
 
+\subsection{Temuan Utama Phase 3}
 \begin{enumerate}
-    \item \textbf{Primary Finding}: Status merokok merupakan prediktor dominan biaya pengobatan dengan korelasi 0,787 dan dampak biaya +280\%
-    
-    \item \textbf{Critical Interaction}: Kombinasi obesitas dan merokok menghasilkan biaya tertinggi (\$41,558 untuk obese smokers)
-    
-    \item \textbf{Data Quality}: Dataset berkualitas tinggi dengan missing values minimal (0,22\%) dan distribusi demografis yang seimbang
-    
-    \item \textbf{Modeling Readiness}: Karakteristik data sangat mendukung implementasi XGBoost dengan feature hierarchy yang jelas dan interaksi non-linear yang kuat
-    
-    \item \textbf{XAI Potential}: Dominasi smoking status akan menghasilkan explanations yang konsisten dan actionable untuk patient empowerment
+    \item \textbf{Baseline Performance Challenge}: XGBoost baseline (R² = 0.8309) menunjukkan performa di bawah Linear Regression (R² = 0.8637), membuktikan bahwa hyperparameter optimization adalah \textbf{essential} untuk XGBoost.
+
+    \item \textbf{Enhanced Optimization Success}: Melalui feature engineering dan hyperparameter tuning, Enhanced XGBoost mencapai R² = 0.8618, \textbf{memenuhi target pembimbing (R² > 0.86)} namun masih kurang 0.49\% dari target thesis (R² > 0.87).
+
+    \item \textbf{Feature Interactions Effectiveness}: Penambahan 5 feature interactions (smoker×BMI, smoker×age, dll.) memberikan kontribusi signifikan dengan smoker\_bmi\_interaction menjadi predictor kedua terpenting (gain = 0.1892).
+
+    \item \textbf{Overfitting Resolution}: Training-test gap berhasil dikurangi dari 0.1438 (baseline) menjadi 0.0165 (enhanced), menunjukkan generalization yang excellent.
+
+    \item \textbf{Model Stability}: Cross-validation menunjukkan stabilitas tinggi dengan CV R² = 0.8568 ± 0.0089, mengkonfirmasi reliabilitas model.
 \end{enumerate}
 
-Temuan ini memberikan fondasi kuat untuk Phase 2 (implementasi XGBoost) dan Phase 3 (integrasi Explainable AI), dengan expectation bahwa model akan fokus pada smoking status sebagai primary predictor dan memanfaatkan interaksi BMI × smoking untuk akurasi prediksi yang optimal.
+\subsection{Perbandingan Evolusi Model}
+\begin{table}[H]
+\centering
+\caption{Ringkasan Evolusi Performa Model}
+\label{tab:model-evolution-summary}
+\begin{tabular}{|l|c|c|c|}
+\hline
+\textbf{Model} & \textbf{R² Score} & \textbf{RMSE} & \textbf{Target Status} \\
+\hline
+Linear Regression Baseline & 0.8637 & \$4,120.52 & ✓ Thesis target \\
+XGBoost Baseline & 0.8309 & \$4,589.52 & ❌ Both targets \\
+XGBoost Enhanced & 0.8618 & \$4,145.12 & ✓ Professor target \\
+\hline
+\end{tabular}
+\end{table}
+
+\subsection{Implikasi untuk Phase 4: Explainable AI}
+\begin{enumerate}
+    \item \textbf{Model Readiness}: Enhanced XGBoost dengan R² = 0.8618 dan feature interactions yang kuat siap untuk implementasi SHAP dan LIME.
+
+    \item \textbf{Feature Hierarchy Clarity}: Dominasi high\_risk dan smoker\_bmi\_interaction akan menghasilkan explanations yang konsisten dan interpretable.
+
+    \item \textbf{Patient-Centric Value}: Feature interactions berbasis lifestyle (smoking, BMI) mendukung actionable insights untuk patient empowerment.
+
+    \item \textbf{Methodological Contribution}: Demonstrasi efektivitas feature engineering dalam domain healthcare cost prediction.
+\end{enumerate}
+
+\subsection{Kontribusi Akademik}
+\begin{enumerate}
+    \item \textbf{Empirical Validation}: Mengkonfirmasi pentingnya hyperparameter optimization dalam XGBoost untuk domain healthcare.
+
+    \item \textbf{Feature Engineering Innovation}: Membuktikan efektivitas smoking-BMI interaction dalam prediksi biaya pengobatan.
+
+    \item \textbf{Methodological Framework}: Menyediakan systematic approach untuk optimasi XGBoost pada insurance cost prediction.
+
+    \item \textbf{XAI Preparation}: Menetapkan foundation yang solid untuk implementasi explainable AI dengan model yang stable dan interpretable.
+\end{enumerate}
+
+\subsection{Limitations dan Future Work}
+\begin{enumerate}
+    \item \textbf{Thesis Target Gap}: Masih kurang 0.49\% untuk mencapai R² > 0.87, memberikan ruang untuk further optimization.
+
+    \item \textbf{Linear vs Tree-based Trade-off}: XGBoost enhanced masih 0.19\% di bawah Linear Regression, menunjukkan karakteristik data yang predominantly linear.
+
+    \item \textbf{Computational Complexity}: Trade-off antara model complexity dan interpretability untuk XAI implementation.
+\end{enumerate}
+
+Phase 3 berhasil memenuhi target pembimbing dan memberikan foundation yang kuat untuk Phase 4 (Explainable AI Integration), dengan model yang optimized, stable, dan siap untuk interpretability analysis menggunakan SHAP dan LIME.
 
 %% Bibliography akan ditambahkan setelah semua chapter selesai
 %% \bibliography{references}

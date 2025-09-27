@@ -123,9 +123,9 @@ class XGBoostOptimizer:
         return df
 
     def prepare_features_for_optimization(self, df):
-        """Prepare features for XGBoost optimization with feature interactions."""
+        """Prepare features for XGBoost optimization."""
         print("\n" + "=" * 40)
-        print("FEATURE PREPARATION WITH INTERACTIONS")
+        print("FEATURE PREPARATION FOR OPTIMIZATION")
         print("=" * 40)
 
         df_xgb = df.copy()
@@ -141,29 +141,6 @@ class XGBoostOptimizer:
                 label_encoders[feature] = le
                 print(f"Label encoded {feature}: {list(le.classes_)}")
 
-        # CREATE FEATURE INTERACTIONS - Quick Win Strategy
-        print(f"\n🔧 Creating Feature Interactions (Quick Win #3):")
-
-        # 1. Smoking × BMI interaction (most critical based on EDA)
-        df_xgb['smoker_bmi_interaction'] = df_xgb['smoker'] * df_xgb['bmi']
-        print(f"   ✅ smoker_bmi_interaction: Critical cost driver")
-
-        # 2. Smoking × Age interaction
-        df_xgb['smoker_age_interaction'] = df_xgb['smoker'] * df_xgb['age']
-        print(f"   ✅ smoker_age_interaction: Age amplifies smoking effect")
-
-        # 3. High-risk × Age interaction
-        df_xgb['high_risk_age_interaction'] = df_xgb['high_risk'] * df_xgb['age']
-        print(f"   ✅ high_risk_age_interaction: Compound risk over time")
-
-        # 4. BMI category × Age interaction
-        df_xgb['bmi_category_age_interaction'] = df_xgb['bmi_category'] * df_xgb['age']
-        print(f"   ✅ bmi_category_age_interaction: Weight issues worsen with age")
-
-        # 5. Family size × Age interaction (cost pattern for families)
-        df_xgb['family_age_interaction'] = df_xgb['family_size'] * df_xgb['age']
-        print(f"   ✅ family_age_interaction: Family healthcare costs")
-
         # Select features for modeling
         exclude_features = ['charges', 'log_charges']
         feature_columns = [col for col in df_xgb.columns if col not in exclude_features]
@@ -178,10 +155,8 @@ class XGBoostOptimizer:
 
         self.feature_names = feature_columns
 
-        print(f"\n📊 Enhanced Feature Set: {len(feature_columns)} features (+5 interactions)")
-        print(f"Original features: 10")
-        print(f"Interaction features: 5")
-        print(f"Total features: {len(feature_columns)}")
+        print(f"\nOptimization feature set: {len(feature_columns)} features")
+        print(f"Features: {feature_columns}")
         print(f"Target: charges (${y.min():,.0f} - ${y.max():,.0f})")
 
         return X, y, label_encoders
@@ -211,91 +186,84 @@ class XGBoostOptimizer:
 
         return X_train, X_val, X_test, y_train, y_val, y_test
 
-    def define_enhanced_search_space(self):
+    def define_focused_search_space(self):
         """
-        Define enhanced hyperparameter search space with Quick Win improvements.
-        Focus on achieving R² > 0.87 and beating Linear Regression.
+        Define focused hyperparameter search space based on baseline analysis.
+        Prioritize regularization to reduce overfitting.
         """
         print("\n" + "=" * 40)
-        print("ENHANCED HYPERPARAMETER SEARCH SPACE")
+        print("FOCUSED HYPERPARAMETER SEARCH SPACE")
         print("=" * 40)
 
-        # Enhanced search space with Quick Win strategies
+        # Focused search space based on baseline findings
         param_grid = {
-            # Learning rate: Keep proven range
+            # Learning rate: Lower values for better generalization
             'learning_rate': [0.01, 0.03, 0.05, 0.07, 0.1],
 
-            # QUICK WIN #1: Increase n_estimators with early stopping capability
-            'n_estimators': [300, 500, 700, 1000],  # Higher range for better performance
+            # Number of estimators: Moderate range with early stopping
+            'n_estimators': [100, 200, 300, 500],
 
-            # QUICK WIN #2: Slightly increase max_depth (current best was 3, expand to 4-5)
-            'max_depth': [3, 4, 5],  # Focus on 4-5 for better complexity
-
-            'min_child_weight': [3, 5, 7, 10, 15],  # Keep regularization focus
+            # Tree complexity: Reduce overfitting
+            'max_depth': [3, 4, 5, 6],  # Shallower trees to reduce overfitting
+            'min_child_weight': [3, 5, 7, 10, 15],  # Higher values to prevent overfitting
 
             # Sampling for regularization
             'subsample': [0.6, 0.7, 0.8, 0.9],
             'colsample_bytree': [0.6, 0.7, 0.8, 0.9],
 
-            # Regularization: Maintain focus but allow some flexibility
-            'reg_alpha': [0, 0.01, 0.1, 0.5, 1.0],  # Slightly reduce upper bound
-            'reg_lambda': [1.0, 2.0, 5.0, 10.0],    # Keep strong regularization
+            # Regularization: Key focus to reduce overfitting
+            'reg_alpha': [0, 0.01, 0.1, 0.5, 1.0, 2.0],  # L1 regularization
+            'reg_lambda': [1.0, 2.0, 5.0, 10.0, 20.0],   # L2 regularization (higher values)
 
-            # Minimum split loss: Keep range
-            'gamma': [0, 0.1, 0.5, 1.0, 2.0],
+            # Minimum split loss: Prevent overfitting
+            'gamma': [0, 0.1, 0.5, 1.0, 2.0, 5.0],
         }
 
         total_combinations = np.prod([len(v) for v in param_grid.values()])
         print(f"Total parameter combinations: {total_combinations:,}")
-        print(f"\n🚀 Enhanced Optimization Strategy:")
-        print(f"  🎯 Primary Target: R² > 0.87 (thesis target)")
-        print(f"  🎯 Secondary Target: Beat Linear Regression (R² > 0.8637)")
-        print(f"  🔧 Quick Win #1: Higher n_estimators (300-1000)")
-        print(f"  🔧 Quick Win #2: Optimized max_depth (3-5)")
-        print(f"  🔧 Quick Win #3: Feature interactions (+5 features)")
-        print(f"  🔄 Method: RandomizedSearchCV with 400 iterations")
-        print(f"  ⏱️  Expected time: 15-20 minutes (due to higher n_estimators)")
+        print(f"Optimization Strategy:")
+        print(f"  🎯 Focus: Regularization to reduce overfitting")
+        print(f"  📊 Target: R² > 0.86 (professor's requirement)")
+        print(f"  🔄 Method: RandomizedSearchCV with 300 iterations")
+        print(f"  ⏱️  Expected time: 10-15 minutes")
 
         for param, values in param_grid.items():
             print(f"  {param}: {values}")
 
         return param_grid
 
-    def optimize_xgboost_enhanced(self, X_train, y_train, X_val, y_val):
+    def optimize_xgboost(self, X_train, y_train, X_val, y_val):
         """
-        Perform enhanced hyperparameter optimization with Quick Win strategies.
-        Target: R² > 0.87 and beat Linear Regression.
+        Perform systematic hyperparameter optimization focused on reducing overfitting.
         """
         print("\n" + "=" * 40)
-        print("ENHANCED HYPERPARAMETER OPTIMIZATION")
+        print("SYSTEMATIC HYPERPARAMETER OPTIMIZATION")
         print("=" * 40)
 
-        # Base parameters with early stopping capability
+        # Base parameters focused on reducing overfitting
         base_params = {
             'objective': 'reg:squarederror',
             'eval_metric': 'rmse',
             'tree_method': 'hist',
             'random_state': 42,
             'n_jobs': -1,
-            'verbosity': 0,
-            'early_stopping_rounds': 50  # Early stopping for higher n_estimators
+            'verbosity': 0
         }
 
         # Create XGBoost regressor
         xgb_model = XGBRegressor(**base_params)
 
-        # Define enhanced search space
-        param_grid = self.define_enhanced_search_space()
+        # Define search space
+        param_grid = self.define_focused_search_space()
 
-        # Create RandomizedSearchCV with more iterations for enhanced search
-        print(f"\nStarting enhanced hyperparameter optimization...")
-        print(f"Using 5-fold cross-validation with 400 parameter combinations")
-        print(f"🎯 Target: R² > 0.87 (thesis) and > 0.8637 (beat Linear Regression)")
+        # Create RandomizedSearchCV with cross-validation
+        print(f"\nStarting hyperparameter optimization...")
+        print(f"Using 5-fold cross-validation with 300 parameter combinations")
 
         random_search = RandomizedSearchCV(
             estimator=xgb_model,
             param_distributions=param_grid,
-            n_iter=400,  # More iterations for enhanced optimization
+            n_iter=300,  # More iterations for better optimization
             cv=5,        # 5-fold cross-validation
             scoring='r2',  # Optimize for R² score
             n_jobs=-1,   # Use all CPU cores
@@ -307,24 +275,12 @@ class XGBoostOptimizer:
         # Start optimization
         optimization_start = time.time()
 
-        print(f"🔄 Enhanced optimization in progress (15-20 minutes due to higher complexity)...")
-
-        # Fit with evaluation set for early stopping
-        eval_set = [(X_train, y_train), (X_val, y_val)]
-        try:
-            # Try fitting with eval_set first
-            random_search.fit(
-                X_train, y_train,
-                eval_set=eval_set,
-                verbose=False
-            )
-        except Exception as e:
-            print(f"⚠️  Falling back to standard fit (early stopping will be handled by base params)")
-            random_search.fit(X_train, y_train)
+        print(f"🔄 Optimization in progress (this will take ~10-15 minutes)...")
+        random_search.fit(X_train, y_train)
 
         optimization_time = time.time() - optimization_start
 
-        print(f"\n✅ Enhanced optimization completed in {optimization_time/60:.1f} minutes")
+        print(f"\n✅ Optimization completed in {optimization_time/60:.1f} minutes")
 
         # Extract best model and parameters
         self.model = random_search.best_estimator_
@@ -334,21 +290,14 @@ class XGBoostOptimizer:
         self.optimization_history = {
             'best_cv_score': random_search.best_score_,
             'cv_results': random_search.cv_results_,
-            'optimization_time': optimization_time,
-            'enhancement_strategy': 'feature_interactions + higher_n_estimators + optimized_depth'
+            'optimization_time': optimization_time
         }
 
-        print(f"\n🎯 Best Enhanced Hyperparameters:")
+        print(f"\n🎯 Best Hyperparameters Found:")
         for param, value in self.best_params.items():
             print(f"  {param}: {value}")
 
         print(f"\nBest CV R² Score: {random_search.best_score_:.4f}")
-
-        # Compare with previous best
-        if hasattr(self, 'baseline_results'):
-            prev_best = max(self.baseline_results['linear_r2'], self.baseline_results.get('xgboost_baseline_r2', 0))
-            improvement = random_search.best_score_ - prev_best
-            print(f"CV Improvement vs Previous Best: {improvement:+.4f}")
 
         return optimization_time
 
@@ -411,14 +360,8 @@ class XGBoostOptimizer:
         else:
             print(f"  🚨 Significant overfitting (gap > 0.10)")
 
-        # Cross-validation for robustness (disable early stopping for CV)
-        cv_model = XGBRegressor(**{
-            param: getattr(self.model, param) for param in self.model.get_params()
-            if param != 'early_stopping_rounds'
-        })
-        cv_model.set_params(early_stopping_rounds=None)  # Disable for CV
-
-        cv_scores = cross_val_score(cv_model, X_train, y_train, cv=5, scoring='r2')
+        # Cross-validation for robustness
+        cv_scores = cross_val_score(self.model, X_train, y_train, cv=5, scoring='r2')
         print(f"\n5-Fold CV R² Score: {cv_scores.mean():.4f} (±{cv_scores.std() * 2:.4f})")
 
         return test_metrics
@@ -592,29 +535,11 @@ class XGBoostOptimizer:
             pickle.dump(self.model, f)
         print(f"✅ Optimized XGBoost model saved: {model_path}")
 
-        # Generate comprehensive summary with enhancement details
+        # Generate comprehensive summary
         summary = {
-            'model_type': 'XGBoost Regressor - Enhanced with Feature Interactions',
-            'optimization_strategy': 'Quick Win Strategy: Feature interactions + Higher n_estimators + Optimized depth',
-            'optimization_method': 'RandomizedSearchCV with 400 iterations',
-            'enhancement_features': {
-                'feature_interactions_added': 5,
-                'total_features': len(self.feature_names),
-                'original_features': len(self.feature_names) - 5,
-                'interaction_types': [
-                    'smoker_bmi_interaction',
-                    'smoker_age_interaction',
-                    'high_risk_age_interaction',
-                    'bmi_category_age_interaction',
-                    'family_age_interaction'
-                ]
-            },
-            'hyperparameter_enhancements': {
-                'n_estimators_range': '300-1000 (vs 100-500 previous)',
-                'max_depth_range': '3-5 (vs 3-6 previous)',
-                'early_stopping_rounds': 50,
-                'iterations_used': 400
-            },
+            'model_type': 'XGBoost Regressor - Hyperparameter Optimized',
+            'optimization_strategy': 'Focused regularization to reduce overfitting',
+            'optimization_method': 'RandomizedSearchCV with 300 iterations',
             'features_used': len(self.feature_names),
             'feature_names': self.feature_names,
             'best_hyperparameters': self.best_params,
@@ -622,7 +547,7 @@ class XGBoostOptimizer:
             'baseline_comparison': {
                 'linear_regression_r2': self.baseline_results['linear_r2'],
                 'xgboost_baseline_r2': self.baseline_results['xgboost_baseline_r2'],
-                'enhanced_xgboost_r2': self.performance_metrics['test']['r2_score'],
+                'optimized_xgboost_r2': self.performance_metrics['test']['r2_score'],
                 'improvement_vs_linear': self.performance_metrics['test']['r2_score'] - self.baseline_results['linear_r2'],
                 'improvement_vs_baseline': self.performance_metrics['test']['r2_score'] - self.baseline_results['xgboost_baseline_r2']
             },
@@ -637,7 +562,6 @@ class XGBoostOptimizer:
                 'test_r2': self.performance_metrics['test']['r2_score'],
                 'overfitting_gap': self.performance_metrics['training']['r2_score'] - self.performance_metrics['test']['r2_score']
             },
-            'enhancement_summary': self.optimization_history.get('enhancement_strategy', 'Enhanced optimization'),
             'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         }
 
@@ -671,16 +595,8 @@ class XGBoostOptimizer:
         test_r2 = summary['performance_metrics']['test']['r2_score']
         targets = summary['target_achievement']
 
-        print(f"✅ Enhanced optimization completed in {summary['optimization_time_minutes']:.1f} minutes")
+        print(f"✅ Optimization completed in {summary['optimization_time_minutes']:.1f} minutes")
         print(f"✅ Final R² Score: {test_r2:.4f}")
-
-        print(f"\n🚀 Enhancement Strategy Applied:")
-        enhancements = summary['enhancement_features']
-        hyper_enhancements = summary['hyperparameter_enhancements']
-        print(f"   🔧 Feature Interactions: +{enhancements['feature_interactions_added']} features")
-        print(f"   🔧 Higher n_estimators: {hyper_enhancements['n_estimators_range']}")
-        print(f"   🔧 Optimized max_depth: {hyper_enhancements['max_depth_range']}")
-        print(f"   🔧 Early stopping: {hyper_enhancements['early_stopping_rounds']} rounds")
 
         print(f"\n🎯 Target Achievement:")
         if targets['professor_target_0_86']:
@@ -689,14 +605,12 @@ class XGBoostOptimizer:
             print(f"   ❌ Professor's Target (R² > 0.86): NOT ACHIEVED")
 
         if targets['thesis_target_0_87']:
-            print(f"   🎉 THESIS TARGET (R² > 0.87): ACHIEVED!")
+            print(f"   ✅ Thesis Target (R² > 0.87): ACHIEVED")
         else:
-            gap_to_thesis = 0.87 - test_r2
             print(f"   ⚠️  Thesis Target (R² > 0.87): NOT ACHIEVED")
-            print(f"      Gap remaining: {gap_to_thesis:.4f}")
 
         if targets['beat_linear_regression']:
-            print(f"   🎉 BEAT LINEAR REGRESSION: ACHIEVED!")
+            print(f"   ✅ Beat Linear Regression: ACHIEVED")
         else:
             print(f"   ❌ Beat Linear Regression: NOT ACHIEVED")
 
@@ -719,15 +633,11 @@ class XGBoostOptimizer:
             print(f"   🚨 Significant overfitting remains")
 
         print(f"\n🔄 Next Steps:")
-        if test_r2 > 0.87:
-            print(f"   🎉 READY FOR PHASE 4: Explainable AI (SHAP & LIME)")
-            print(f"   🎯 All targets achieved - proceed with confidence!")
-        elif test_r2 > 0.86:
+        if test_r2 > 0.86:
             print(f"   ✅ Ready for Phase 4: Explainable AI (SHAP & LIME)")
-            print(f"   ✅ Professor's requirement met")
         else:
-            print(f"   ⚠️  Consider ensemble methods or advanced feature engineering")
-        print(f"   📊 Dashboard development with enhanced model")
+            print(f"   ⚠️  Consider additional optimization strategies")
+        print(f"   📊 Dashboard development with optimized model")
 
 
 def main():
@@ -755,8 +665,8 @@ def main():
     optimizer.X_test = X_test
     optimizer.y_test = y_test
 
-    # Enhanced XGBoost hyperparameter optimization with Quick Wins
-    optimization_time = optimizer.optimize_xgboost_enhanced(X_train, y_train, X_val, y_val)
+    # Optimize XGBoost hyperparameters
+    optimization_time = optimizer.optimize_xgboost(X_train, y_train, X_val, y_val)
 
     # Evaluate optimized model
     test_metrics = optimizer.evaluate_optimized_model(X_train, y_train, X_val, y_val, X_test, y_test)
