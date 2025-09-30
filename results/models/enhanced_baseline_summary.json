@@ -1,0 +1,127 @@
+{
+  "model_type": "Enhanced Linear Regression Baseline",
+  "enhancement_strategy": "High-quality data preprocessing + strategic feature engineering",
+  "data_quality_score": 10,
+  "features_used": 17,
+  "feature_names": [
+    "age",
+    "sex",
+    "bmi",
+    "children",
+    "smoker",
+    "region",
+    "age_group",
+    "bmi_category",
+    "high_risk",
+    "family_size",
+    "smoker_bmi_interaction",
+    "smoker_age_interaction",
+    "high_risk_age_interaction",
+    "extreme_obesity",
+    "senior_smoker",
+    "young_high_bmi",
+    "cost_complexity_score"
+  ],
+  "best_model_type": "elastic_net",
+  "all_models_performance": {
+    "linear_regression": {
+      "validation_r2": 0.8619011854181134,
+      "cv_mean": 0.8622160109534744,
+      "cv_std": 0.0437162709162269,
+      "description": "Standard Linear Regression with scaling"
+    },
+    "ridge_regression": {
+      "validation_r2": 0.8620795169297979,
+      "cv_mean": 0.862294270140042,
+      "cv_std": 0.04375553540594138,
+      "description": "Ridge Regression (L2 regularization)"
+    },
+    "lasso_regression": {
+      "validation_r2": 0.8619049255099224,
+      "cv_mean": 0.8622160060608461,
+      "cv_std": 0.04371979025708199,
+      "description": "Lasso Regression (L1 regularization)"
+    },
+    "elastic_net": {
+      "validation_r2": 0.8638777600304381,
+      "cv_mean": 0.8595677831148272,
+      "cv_std": 0.04499334710164333,
+      "description": "Elastic Net (L1 + L2 regularization)"
+    }
+  },
+  "performance_metrics": {
+    "test": {
+      "r2_score": 0.8566430751906364,
+      "rmse": 4225.735835975393,
+      "mae": 2331.832574497208,
+      "mape": 29.24858902240431
+    },
+    "model_type": "Enhanced Linear Regression",
+    "features_used": 17,
+    "data_quality_score": 10
+  },
+  "feature_importance_top_10": [
+    {
+      "feature": "high_risk",
+      "coefficient": 3866.6091515423964,
+      "abs_coefficient": 3866.6091515423964
+    },
+    {
+      "feature": "smoker_bmi_interaction",
+      "coefficient": 3339.9085023270645,
+      "abs_coefficient": 3339.9085023270645
+    },
+    {
+      "feature": "age",
+      "coefficient": 2613.77719904249,
+      "abs_coefficient": 2613.77719904249
+    },
+    {
+      "feature": "smoker",
+      "coefficient": 2092.26860499948,
+      "abs_coefficient": 2092.26860499948
+    },
+    {
+      "feature": "high_risk_age_interaction",
+      "coefficient": 1329.559105726143,
+      "abs_coefficient": 1329.559105726143
+    },
+    {
+      "feature": "cost_complexity_score",
+      "coefficient": 808.6969428816349,
+      "abs_coefficient": 808.6969428816349
+    },
+    {
+      "feature": "age_group",
+      "coefficient": 776.1242075355129,
+      "abs_coefficient": 776.1242075355129
+    },
+    {
+      "feature": "region",
+      "coefficient": -388.790559232649,
+      "abs_coefficient": 388.790559232649
+    },
+    {
+      "feature": "bmi",
+      "coefficient": -365.1560041721873,
+      "abs_coefficient": 365.1560041721873
+    },
+    {
+      "feature": "children",
+      "coefficient": 245.21272899238943,
+      "abs_coefficient": 245.21272899238943
+    }
+  ],
+  "thesis_target_achievement": {
+    "target_r2": 0.87,
+    "achieved_r2": 0.8566430751906364,
+    "target_met": false,
+    "gap_to_target": 0.013356924809363568
+  },
+  "enhancement_impact": {
+    "data_quality_improvements": "Fixed missing values, BMI categories, age groups, high_risk calculation",
+    "strategic_features_added": "Smoker interactions, risk stratification, cost complexity scoring",
+    "expected_xgboost_improvement": "Enhanced baseline provides strong foundation for XGBoost optimization"
+  },
+  "timestamp": "2025-09-30 18:55:12"
+}

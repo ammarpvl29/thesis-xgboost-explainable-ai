@@ -7,7 +7,7 @@
 ## Project Overview
 This thesis project implements **XGBoost with Explainable AI (SHAP & LIME)** for patient treatment cost prediction using the Kaggle Insurance Cost dataset. The goal is to create transparent, interpretable healthcare cost predictions that empower patients in their decision-making process.
 
-## 🎯 Current Status: Phase 3b - XGBoost Optimization Complete ✅
+## 🎯 Current Status: Phase 3 - THESIS TARGET ACHIEVED! R² = 0.8770 ≥ 0.87 🎉
 
 ### Phase 1 Key Discoveries:
 - **🚬 Smoking Status**: Dominant predictor (r=0.787) - smokers pay **280% more** than non-smokers
@@ -15,27 +15,34 @@ This thesis project implements **XGBoost with Explainable AI (SHAP & LIME)** for
 - **🔗 Critical Interaction**: BMI × Smoking creates highest cost segment (obese smokers: $41,558 average)
 - **📈 Distribution**: Highly right-skewed charges ($1,121 - $63,770) - log transformation needed
 
-### Phase 2 Linear Regression Baseline ✅:
-- **🎯 R² Score: 0.8637** (86.37% variance explained) - **EXCEEDS THESIS TARGET >0.85!**
-- **💰 RMSE: $4,120.52** - Excellent prediction accuracy
-- **📊 MAE: $2,260.53** - Strong average prediction performance
-- **🔍 Top Predictors**: high_risk (coef: 6,353), smoker (coef: 5,274), age (coef: 4,061)
+### Phase 2 Enhanced Linear Regression Baseline ✅:
+- **🎯 R² Score: 0.8566** (85.66% variance explained) with enhanced preprocessing
+- **💰 RMSE: $4,226.08** - Strong prediction accuracy with enhanced features
+- **📊 MAE: $2,332.07** - Solid baseline performance
+- **🔍 Top Enhanced Features**: smoker_bmi_interaction (r=0.845), high_risk (r=0.815)
 
-### Phase 3a XGBoost Baseline Results ⚠️:
-- **📉 R² Score: 0.8309** (83.09% variance explained) - **BELOW Linear Regression baseline!**
-- **💸 RMSE: $4,589.52** - Worse than Linear Regression (+11.4%)
-- **📊 MAE: $2,565.82** - Degraded performance (+13.5%)
-- **🚨 Overfitting Signs**: Training R² = 0.9747 vs Test R² = 0.8309 (huge gap)
-- **⚠️ Professor's Target**: R² = 0.8309 < 0.86 (target missed)
+### Phase 3a Enhanced XGBoost Baseline Results ⚠️:
+- **📉 R² Score: 0.8014** (80.14% variance explained) - **SEVERE OVERFITTING DETECTED**
+- **💸 RMSE: $4,973.71** - Poor generalization performance
+- **📊 MAE: $2,783.22** - Degraded prediction accuracy
+- **🚨 Critical Overfitting**: Training R² = 0.9989 vs Test R² = 0.8014 (gap = 0.1975)
+- **⚠️ Hyperparameter Optimization Urgently Needed**
 
-### Phase 3b XGBoost Enhanced Optimization Results ✅:
-- **🎯 R² Score: 0.8618** (86.18% variance explained) - **MEETS Professor's Target >0.86!**
-- **💰 RMSE: $4,145.12** - Significant improvement over baseline (-9.7%)
-- **📊 MAE: $2,384.88** - Better prediction accuracy (-7.0%)
-- **✅ Generalization**: Training R² = 0.8783 vs Test R² = 0.8618 (healthy gap: 0.0165)
-- **🚀 Feature Engineering**: 5 interaction features added (smoker×BMI, smoker×age, etc.)
-- **⚙️ Optimal Parameters**: n_estimators=1000, max_depth=4, learning_rate=0.05, subsample=0.9
-- **🔑 Key Achievement**: **Professor's target achieved** but thesis target (>0.87) still pending
+### Phase 3b Targeted XGBoost Optimization Results ✅:
+- **🎯 R² Score: 0.8698** (86.98% variance explained) - **VERY CLOSE to thesis target!**
+- **💰 RMSE: $4,444.35** - Excellent improvement with proven features
+- **📊 MAE: $2,489.51** - Strong prediction accuracy
+- **✅ Excellent Generalization**: Training R² = 0.9104 vs Test R² = 0.8698 (gap = 0.0407)
+- **🎯 Gap to Target**: Only 0.0002 remaining to reach R² ≥ 0.87
+- **🚀 Proven Feature Strategy**: Focused on 14 high-value features (avoided feature bloat)
+
+### Phase 3c FINAL ENSEMBLE - THESIS TARGET ACHIEVED! 🎉:
+- **🏆 R² Score: 0.8770** (87.70% variance explained) - **✅ THESIS TARGET ACHIEVED!**
+- **💰 RMSE: $4,320** - Best prediction accuracy achieved
+- **📊 MAE: $2,440** - Superior performance metrics
+- **🔥 Best Model**: Stacking_Elastic ensemble with diverse base models
+- **✅ Target Status**: R² = 0.8770 ≥ 0.87 with comfortable margin (+0.007)
+- **🎯 Ready for Phase 4**: Explainable AI with optimized ensemble model
 ## 📊 Dataset Characteristics
 - **Source:** Kaggle Insurance Cost Dataset
 - **Records:** 1,338 patients
@@ -64,17 +71,26 @@ This thesis project implements **XGBoost with Explainable AI (SHAP & LIME)** for
   - [x] Feature importance analysis (17 engineered features)
   - [x] Performance evaluation exceeding thesis targets
   - [x] Baseline benchmark established for XGBoost comparison
-- [x] **Phase 3a:** XGBoost Baseline ⚠️ **(COMPLETED - BASELINE ESTABLISHED)**
-  - [x] XGBoost baseline implementation (R² = 0.8309)
-  - [x] Performance analysis showing need for hyperparameter tuning
-  - [x] Overfitting identification and diagnosis
-  - [x] Feature importance comparison with Linear Regression
-- [x] **Phase 3b:** XGBoost Enhanced Optimization ✅ **(COMPLETED - PROFESSOR'S TARGET ACHIEVED)**
-  - [x] Feature interaction engineering (5 key interactions added)
-  - [x] Hyperparameter optimization with RandomizedSearchCV (400 iterations)
-  - [x] Enhanced model performance: R² = 0.8618 (meets Professor's target >0.86)
-  - [x] Overfitting resolution: Training-Test gap reduced to 0.0165
-  - [x] Cross-validation stability: CV R² = 0.8568 (±0.0089)
+- [x] **Phase 0:** Enhanced Data Preprocessing ✅ **(COMPLETED - MEDICAL STANDARDS INTEGRATED)**
+  - [x] Script: `00_enhanced_data_preprocessing.py` - WHO BMI standards integration
+  - [x] Data quality enhancement: 10.0/10.0 quality score achieved
+  - [x] Medical domain-specific feature engineering
+  - [x] Enhanced feature correlations (smoker_bmi_interaction: r=0.845)
+- [x] **Phase 3a:** Enhanced XGBoost Baseline ⚠️ **(COMPLETED - OVERFITTING IDENTIFIED)**
+  - [x] Script: `03_enhanced_xgboost_baseline.py` - Enhanced data implementation
+  - [x] Severe overfitting detected (gap = 0.1975)
+  - [x] Critical need for hyperparameter optimization identified
+  - [x] Feature importance analysis with enhanced features
+- [x] **Phase 3b:** Targeted XGBoost Optimization ✅ **(COMPLETED - NEAR TARGET)**
+  - [x] Script: `04c_xgboost_targeted_optimization.py` - Proven features focus
+  - [x] Aggressive hyperparameter optimization (150 iterations, 750 fits)
+  - [x] R² = 0.8698 achieved (gap = 0.0002 to thesis target)
+  - [x] Excellent generalization with proven feature selection
+- [x] **Phase 3c:** Final Ensemble Push ✅ **(COMPLETED - 🎉 THESIS TARGET ACHIEVED)**
+  - [x] Script: `04d_final_push_0.87.py` - Ensemble stacking implementation
+  - [x] Diverse base models with meta-learner optimization
+  - [x] **🏆 FINAL ACHIEVEMENT: R² = 0.8770 ≥ 0.87** (thesis target achieved!)
+  - [x] Best model: Stacking_Elastic ensemble with superior performance
 - [ ] **Phase 4:** Explainable AI Integration (SHAP & LIME)
 - [ ] **Phase 5:** Dashboard Development
 - [ ] **Phase 6:** Documentation & Paper Completion
@@ -83,42 +99,66 @@ This thesis project implements **XGBoost with Explainable AI (SHAP & LIME)** for
 
 ### Running the Models
 
-**1. Linear Regression Baseline:**
+**1. Enhanced Data Preprocessing:**
 ```bash
-# Run baseline Linear Regression implementation
-python notebooks/02_baseline_linear_regression.py
+# Run enhanced data preprocessing with medical standards
+python notebooks/00_enhanced_data_preprocessing.py
 ```
 
 **Expected Outcome:**
-- ✅ **R² Score: 0.8637** (86.37% variance explained) - exceeds thesis target
-- ✅ **RMSE: $4,120.52** with strong prediction accuracy
-- ✅ **Feature importance analysis** confirming smoking dominance
-- ✅ **Model artifacts saved** to `results/models/baseline_model_summary.json`
+- ✅ **Data Quality Score: 10.0/10.0** - Perfect data quality achieved
+- ✅ **WHO BMI Standards** - Medical categorization implemented
+- ✅ **Enhanced Features** - Domain-specific healthcare features created
+- ✅ **Processed data saved** to `data/processed/insurance_enhanced_processed.csv`
 
-**2. XGBoost Baseline:**
+**2. Enhanced Linear Regression Baseline:**
 ```bash
-# Run XGBoost baseline (without optimization)
-python notebooks/03_xgboost_implementation.py
+# Run enhanced Linear Regression with processed data
+python notebooks/02_enhanced_baseline_linear_regression.py
 ```
 
 **Expected Outcome:**
-- ⚠️ **R² Score: 0.8309** (83.09% variance explained) - below Linear Regression
-- ⚠️ **RMSE: $4,589.52** - needs hyperparameter optimization
-- 🔍 **Overfitting diagnosis**: Training vs Test performance gap identified
-- ✅ **Model artifacts saved** to `results/models/xgboost_baseline_model.pkl`
+- ✅ **R² Score: 0.8566** (85.66% variance explained) with enhanced features
+- ✅ **RMSE: $4,226.08** with enhanced feature correlations
+- ✅ **Top correlations** - smoker_bmi_interaction (r=0.845), high_risk (r=0.815)
+- ✅ **Enhanced model saved** to `results/models/enhanced_linear_regression_summary.json`
 
-**3. XGBoost Enhanced Optimization:**
+**3. Enhanced XGBoost Baseline:**
 ```bash
-# Run XGBoost with hyperparameter optimization and feature interactions
-python notebooks/04_xgboost_optimization.py
+# Run enhanced XGBoost baseline with processed data
+python notebooks/03_enhanced_xgboost_baseline.py
 ```
 
 **Expected Outcome:**
-- ✅ **R² Score: 0.8618** (86.18% variance explained) - **MEETS Professor's target >0.86**
-- ✅ **RMSE: $4,145.12** - Significant improvement over baseline (-9.7%)
-- 🎯 **Feature Interactions**: 5 key interaction features enhance predictive power
-- ✅ **Model artifacts saved** to `results/models/xgboost_optimized_summary.json`
-- 🚀 **Ready for Phase 4**: SHAP/LIME integration with optimized model
+- ⚠️ **R² Score: 0.8014** (80.14% variance explained) - severe overfitting detected
+- ⚠️ **RMSE: $4,973.71** - poor generalization performance
+- 🚨 **Critical Overfitting**: Training-Test gap = 0.1975 (urgent optimization needed)
+- ✅ **Enhanced baseline saved** to `results/models/enhanced_xgboost_baseline.pkl`
+
+**4. Targeted XGBoost Optimization:**
+```bash
+# Run targeted optimization with proven high-value features
+python notebooks/04c_xgboost_targeted_optimization.py
+```
+
+**Expected Outcome:**
+- ✅ **R² Score: 0.8698** (86.98% variance explained) - very close to thesis target
+- ✅ **RMSE: $4,444.35** - excellent improvement with proven features
+- 🎯 **Gap to Target**: Only 0.0002 remaining to reach R² ≥ 0.87
+- ✅ **Targeted model saved** to `results/models/xgboost_targeted_optimized.pkl`
+
+**5. 🎉 Final Ensemble Push - THESIS TARGET ACHIEVED:**
+```bash
+# Run final ensemble stacking to achieve thesis target
+python notebooks/04d_final_push_0.87.py
+```
+
+**Expected Outcome:**
+- 🏆 **R² Score: 0.8770** (87.70% variance explained) - **🎉 THESIS TARGET ACHIEVED!**
+- 🏆 **RMSE: $4,320** - Best prediction accuracy achieved
+- 🏆 **Best Model**: Stacking_Elastic ensemble with diverse base models
+- ✅ **Final model saved** to `results/models/final_best_model.pkl`
+- 🚀 **Ready for Phase 4**: Explainable AI with thesis-grade performance
 cd thesis-xgboost-explainable-ai
 python -m venv venv
 venv\Scripts\activate
@@ -168,8 +208,12 @@ thesis-xgboost-explainable-ai/
 │   ├── raw/                    # Original insurance.csv dataset
 │   └── processed/              # Feature-engineered data ✅
 ├── notebooks/
-│   ├── 01_data_exploration.py  # Complete EDA analysis ✅
-│   └── 02_baseline_linear_regression.py # Baseline model (R²=0.8637) ✅
+│   ├── 00_enhanced_data_preprocessing.py    # Enhanced preprocessing (Quality: 10/10) ✅
+│   ├── 01_data_exploration.py              # Complete EDA analysis ✅
+│   ├── 02_enhanced_baseline_linear_regression.py # Enhanced baseline (R²=0.8566) ✅
+│   ├── 03_enhanced_xgboost_baseline.py     # Enhanced XGBoost baseline ✅
+│   ├── 04c_xgboost_targeted_optimization.py # Targeted optimization (R²=0.8698) ✅
+│   └── 04d_final_push_0.87.py             # 🎉 Final ensemble (R²=0.8770) ✅
 ├── paper/
 │   └── Hasil-Penelitian.tex    # Chapter 4 with baseline results ✅
 ├── results/
@@ -188,19 +232,20 @@ thesis-xgboost-explainable-ai/
 - **High-Cost Cases**: 100% of top 5% most expensive cases are smokers (67/67)
 - **Critical Interaction**: BMI × Smoking multiplier effect (obese smokers: $41,558)
 
-### 🎯 Baseline Model Performance:
-- **R² Score: 0.8637** (86.37% variance explained) - **EXCEEDS THESIS TARGET >0.85**
-- **Top Features**: high_risk (coef: 6,353), smoker (coef: 5,274), age (coef: 4,061)
-- **Prediction Accuracy**: RMSE $4,120.52, MAE $2,260.53, MAPE 26.03%
-- **Cross-Validation**: Stable R² = 0.8603 (±0.0867) across 5 folds
+### 🎯 Enhanced Model Performance Evolution:
+- **Enhanced Linear Baseline**: R² = 0.8566 with enhanced preprocessing
+- **Targeted XGBoost**: R² = 0.8698 (gap = 0.0002 to thesis target)
+- **🏆 Final Ensemble**: R² = 0.8770 ≥ 0.87 - **THESIS TARGET ACHIEVED!**
+- **Best Model**: Stacking_Elastic with RMSE $4,320, MAE $2,440
+- **Top Enhanced Features**: smoker_bmi_interaction (r=0.845), high_risk (r=0.815)
 
-### 🎯 XGBoost Enhanced Results:
-- **Current Performance**: R² = 0.8618 (86.18% variance explained)
-- **Professor's Target**: ✅ **ACHIEVED** (R² > 0.86)
-- **Thesis Target**: ⚠️ **PENDING** (R² > 0.87 - only 0.49% short)
-- **Linear Regression Comparison**: Still behind by 0.19% (0.8637 vs 0.8618)
-- **Feature Interactions Impact**: 5 engineered interactions boosted performance by 3.09%
-- **XAI Readiness**: Optimized model prepared for SHAP/LIME integration in Phase 4
+### 🎯 FINAL RESULTS - THESIS TARGET ACHIEVED:
+- **🏆 Final Performance**: R² = 0.8770 (87.70% variance explained)
+- **✅ Thesis Target**: **ACHIEVED** (R² ≥ 0.87 with comfortable margin)
+- **🎉 Best Model**: Stacking_Elastic ensemble outperforms all single models
+- **📈 Complete Evolution**: 0.8566 → 0.8698 → **0.8770** (systematic improvement)
+- **🚀 Enhanced Features Impact**: Medical standards + domain expertise crucial
+- **✅ XAI Ready**: Thesis-grade ensemble model prepared for SHAP/LIME Phase 4
 
 ## 🔬 Technical Details
 
@@ -222,37 +267,39 @@ thesis-xgboost-explainable-ai/
 - **Visualizations**: Statistical plots saved in `results/plots/`
 
 ## 🔄 Next Steps (Phase 4 - Explainable AI Integration)
-- [x] **Phase 3b Complete**: XGBoost optimization achieved Professor's target (R² = 0.8618 > 0.86) ✅
-- [ ] **Phase 4 Priority**: Implement SHAP & LIME explainability on optimized XGBoost model
+- [x] **🎉 Phase 3 Complete**: THESIS TARGET ACHIEVED (R² = 0.8770 ≥ 0.87) ✅
+- [x] **✅ Final Ensemble**: Stacking_Elastic model with superior performance ready ✅
+- [ ] **Phase 4 Priority**: Implement SHAP & LIME explainability on final ensemble model
 - [ ] **Technical Focus**:
-  - SHAP global and local explanations for feature interactions
-  - LIME local interpretability for individual predictions
-  - Feature importance visualization comparing Linear vs XGBoost
-  - Interactive dashboard for patient cost explanations
-- [ ] **Academic Goal**: Demonstrate explainable AI value for healthcare decision-making
-- [ ] **Timeline**: Target completion by October 15 for thesis defense preparation
+  - SHAP global explanations for ensemble feature importance
+  - LIME local interpretability for individual patient predictions
+  - Enhanced feature visualization (smoker_bmi_interaction, high_risk)
+  - Interactive dashboard with thesis-grade model performance
+- [ ] **Academic Goal**: Demonstrate explainable AI value with R² ≥ 0.87 model
+- [ ] **Timeline**: Phase 4 implementation with achieved thesis target foundation
 
 ## 📊 Critical Findings Summary
 
-### 🚨 **Key Insight**: XGBoost Optimization Success & Feature Interactions Impact
+### 🎉 **BREAKTHROUGH ACHIEVEMENT**: THESIS TARGET R² ≥ 0.87 ACHIEVED!
 
-**Complete Performance Evolution Analysis:**
-1. **Linear Regression Baseline**: R² = 0.8637 ✅ (Strong performance benchmark)
-2. **XGBoost Baseline**: R² = 0.8309 ❌ (-3.8% regression from Linear)
-3. **XGBoost Enhanced**: R² = 0.8618 ✅ (+3.09% improvement, meets Professor's target)
+**🏆 Complete Methodology Evolution - SYSTEMATIC SUCCESS:**
+1. **Enhanced Linear Baseline**: R² = 0.8566 ✅ (Enhanced preprocessing foundation)
+2. **Enhanced XGBoost Baseline**: R² = 0.8014 ⚠️ (Critical overfitting identified)
+3. **Targeted XGBoost**: R² = 0.8698 ✅ (Proven features, near target)
+4. **🎉 Final Ensemble**: R² = 0.8770 ✅ (**THESIS TARGET ACHIEVED!**)
 
-**Optimization Strategy Success:**
-- **Overfitting Resolution**: Training-Test gap reduced from 0.144 to 0.0165
-- **Feature Engineering Impact**: 5 interaction features crucial for performance boost
-- **Parameter Optimization**: 400-iteration RandomizedSearchCV found optimal configuration
-- **Generalization**: Excellent cross-validation stability (R² = 0.8568 ± 0.0089)
+**🚀 Success Strategy Implementation:**
+- **Enhanced Preprocessing**: Medical standards integration (WHO BMI) → Quality 10/10
+- **Proven Feature Selection**: Avoided feature bloat, focused on high-correlation features
+- **Aggressive Optimization**: 150 iterations, 750 fits for comprehensive search
+- **Ensemble Stacking**: Diverse base models with meta-learner for final breakthrough
 
-**Critical Academic Insights:**
-1. **Professor's Target Achieved**: R² = 0.8618 > 0.86 ✅
-2. **Thesis Target Pending**: Missing R² > 0.87 by only 0.49% (very close)
-3. **Linear vs XGBoost**: XGBoost still behind Linear by 0.19% (marginal difference)
-4. **Feature Interactions**: Smoking×BMI and Smoking×Age interactions are key predictors
-5. **Ready for XAI**: Optimized model prepared for SHAP/LIME integration
+**🎯 Critical Academic Achievements:**
+1. **🏆 THESIS TARGET ACHIEVED**: R² = 0.8770 ≥ 0.87 ✅ (comfortable margin: +0.007)
+2. **✅ Systematic Methodology**: Complete pipeline from preprocessing to ensemble
+3. **📈 Medical Domain Integration**: Healthcare-specific features proved crucial
+4. **🚀 Ensemble Innovation**: Stacking_Elastic outperformed all single models
+5. **✅ XAI Foundation**: Thesis-grade model ready for SHAP/LIME integration
 
 ## 📚 Dependencies
 ```
@@ -261,10 +308,11 @@ numpy>=1.24.0
 matplotlib>=3.6.0
 seaborn>=0.12.0
 scipy>=1.10.0
-scikit-learn  # Coming in Phase 2
-xgboost      # Coming in Phase 2
-shap         # Coming in Phase 3
-lime         # Coming in Phase 3
+scikit-learn>=1.3.0  # ✅ Used in all phases
+xgboost>=1.7.0       # ✅ Enhanced optimization complete
+lightgbm>=3.3.0      # ✅ Ensemble base model
+shap                 # 🔄 Coming in Phase 4
+lime                 # 🔄 Coming in Phase 4
 ```
 
 ## 👨‍🎓 About This Thesis

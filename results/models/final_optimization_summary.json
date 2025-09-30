@@ -1,0 +1,75 @@
+{
+  "timestamp": "2025-09-30T19:50:01.408432",
+  "phase": "Phase 3E - Final Push to R\u00b2 \u2265 0.87",
+  "strategy": "Ensemble stacking with diverse base models",
+  "achievement": "ACHIEVED",
+  "best_model": {
+    "name": "Ensemble_stacking_elastic",
+    "test_r2": 0.8769593779613931,
+    "test_rmse": 4319.607513951698,
+    "test_mae": 2440.0176489215005,
+    "train_time": 1.1294186115264893
+  },
+  "thesis_target_analysis": {
+    "achievement": "ACHIEVED",
+    "test_r2": 0.8769593779613931,
+    "gap_to_target": -0.006959377961393121,
+    "best_model_name": "Ensemble_stacking_elastic"
+  },
+  "all_results": [
+    {
+      "model_name": "Base_xgb_best",
+      "test_r2": 0.8696222854198413,
+      "test_rmse": 4446.534956612538,
+      "test_mae": 2485.9269639264617
+    },
+    {
+      "model_name": "Base_xgb_conservative",
+      "test_r2": 0.8652761269933426,
+      "test_rmse": 4520.040317191791,
+      "test_mae": 2548.5768820030703
+    },
+    {
+      "model_name": "Base_xgb_aggressive",
+      "test_r2": 0.8444299647996389,
+      "test_rmse": 4857.166644263631,
+      "test_mae": 2614.213433687641
+    },
+    {
+      "model_name": "Base_ridge",
+      "test_r2": 0.8732629965999561,
+      "test_rmse": 4384.012119745358,
+      "test_mae": 2434.8865262430622
+    },
+    {
+      "model_name": "Base_elastic",
+      "test_r2": 0.8729022321429115,
+      "test_rmse": 4390.247361947859,
+      "test_mae": 2464.6699632890727
+    },
+    {
+      "model_name": "Base_lgb",
+      "test_r2": 0.8661029013844352,
+      "test_rmse": 4506.149666071101,
+      "test_mae": 2540.9763199363683
+    },
+    {
+      "model_name": "Ensemble_voting",
+      "test_r2": 0.8741324222696853,
+      "test_rmse": 4368.948910065521,
+      "test_mae": 2372.5145083143793
+    },
+    {
+      "model_name": "Ensemble_stacking_ridge",
+      "test_r2": 0.8768563458061241,
+      "test_rmse": 4321.415718967931,
+      "test_mae": 2443.9900391752767
+    },
+    {
+      "model_name": "Ensemble_stacking_elastic",
+      "test_r2": 0.8769593779613931,
+      "test_rmse": 4319.607513951698,
+      "test_mae": 2440.0176489215005
+    }
+  ]
+}

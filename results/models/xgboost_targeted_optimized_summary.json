@@ -1,0 +1,120 @@
+{
+  "timestamp": "2025-09-30T19:47:07.205333",
+  "model_type": "XGBoost Targeted Optimization",
+  "optimization_strategy": "Focused features + aggressive hyperparameter tuning",
+  "performance": {
+    "train_r2": 0.9104308286357221,
+    "validation_r2": 0.8677180058874361,
+    "test_r2": 0.8697505845012534,
+    "test_rmse": 4444.346596550069,
+    "test_mae": 2489.5127771426073,
+    "test_mape": 26.388842118249283,
+    "overfitting_gap": 0.04068024413446869
+  },
+  "target_analysis": {
+    "test_r2": 0.8697505845012534,
+    "thesis_target": 0.87,
+    "gap_to_target": 0.00024941549874657465,
+    "achievement_status": "NOT_ACHIEVED"
+  },
+  "feature_importance": [
+    {
+      "feature": "high_risk",
+      "importance": 0.35528329014778137
+    },
+    {
+      "feature": "smoker_bmi_interaction",
+      "importance": 0.27613016963005066
+    },
+    {
+      "feature": "cost_complexity_score",
+      "importance": 0.1546093225479126
+    },
+    {
+      "feature": "smoker",
+      "importance": 0.09532846510410309
+    },
+    {
+      "feature": "age_group",
+      "importance": 0.05261757969856262
+    },
+    {
+      "feature": "smoker_age_interaction",
+      "importance": 0.018063420429825783
+    },
+    {
+      "feature": "age",
+      "importance": 0.01388863380998373
+    },
+    {
+      "feature": "high_risk_age_interaction",
+      "importance": 0.010469385422766209
+    },
+    {
+      "feature": "children",
+      "importance": 0.004788369406014681
+    },
+    {
+      "feature": "bmi",
+      "importance": 0.00412360392510891
+    },
+    {
+      "feature": "bmi_category",
+      "importance": 0.00402316777035594
+    },
+    {
+      "feature": "family_size",
+      "importance": 0.0039009118918329477
+    },
+    {
+      "feature": "region",
+      "importance": 0.003422773675993085
+    },
+    {
+      "feature": "sex",
+      "importance": 0.00335104763507843
+    }
+  ],
+  "model_parameters": {
+    "objective": "reg:squarederror",
+    "base_score": null,
+    "booster": null,
+    "callbacks": null,
+    "colsample_bylevel": null,
+    "colsample_bynode": null,
+    "colsample_bytree": 0.8393144233072618,
+    "device": null,
+    "early_stopping_rounds": null,
+    "enable_categorical": false,
+    "eval_metric": null,
+    "feature_types": null,
+    "feature_weights": null,
+    "gamma": 2.2984075638056556,
+    "grow_policy": null,
+    "importance_type": null,
+    "interaction_constraints": null,
+    "learning_rate": 0.032020689007190406,
+    "max_bin": null,
+    "max_cat_threshold": null,
+    "max_cat_to_onehot": null,
+    "max_delta_step": null,
+    "max_depth": 4,
+    "max_leaves": null,
+    "min_child_weight": 5,
+    "missing": NaN,
+    "monotone_constraints": null,
+    "multi_strategy": null,
+    "n_estimators": 307,
+    "n_jobs": -1,
+    "num_parallel_tree": null,
+    "random_state": 42,
+    "reg_alpha": 6.947270012073414,
+    "reg_lambda": 2.722179227162397,
+    "sampling_method": null,
+    "scale_pos_weight": null,
+    "subsample": 0.8360922667476348,
+    "tree_method": "hist",
+    "validate_parameters": null,
+    "verbosity": null
+  }
+}

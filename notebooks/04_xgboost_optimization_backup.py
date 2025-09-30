@@ -1,22 +1,3 @@
-"""
-Phase 3b: XGBoost Hyperparameter Optimization
-XGBoost Explainable AI for Patient Treatment Cost Prediction
-
-Author: Ammar Pavel Zamora Siregar (1202224044)
-Date: September 2024
-Objective: Optimize XGBoost hyperparameters to achieve R² > 0.86 (Professor's target)
-
-Based on Phase 3a baseline findings:
-- Baseline XGBoost R² = 0.8309 (underperformed vs Linear R² = 0.8637)
-- Severe overfitting observed (Training R² = 0.9747 vs Test R² = 0.8309)
-- Clear need for regularization and careful parameter tuning
-
-This script implements systematic hyperparameter optimization with focus on:
-1. Reducing overfitting through regularization
-2. Achieving professor's target R² > 0.86
-3. Beating Linear Regression baseline (R² = 0.8637)
-"""
-
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -35,13 +16,11 @@ import time
 from scipy import stats
 warnings.filterwarnings('ignore')
 
-# Configure plotting
 plt.style.use('default')
 sns.set_palette("husl")
 plt.rcParams['figure.figsize'] = (12, 8)
 plt.rcParams['font.size'] = 12
 
-# Set random seed for reproducibility
 np.random.seed(42)
 
 class XGBoostOptimizer:
@@ -65,7 +44,6 @@ class XGBoostOptimizer:
         print("=" * 60)
         print("Loading baseline results for strategic optimization...")
 
-        # Load Linear Regression baseline
         try:
             with open('results/models/baseline_model_summary.json', 'r') as f:
                 linear_baseline = json.load(f)
@@ -75,7 +53,6 @@ class XGBoostOptimizer:
             print("❌ Linear Regression baseline not found!")
             return False
 
-        # Load XGBoost baseline
         try:
             with open('results/models/xgboost_baseline_summary.json', 'r') as f:
                 xgb_baseline = json.load(f)
@@ -106,11 +83,9 @@ class XGBoostOptimizer:
         print("DATA LOADING AND PREPARATION")
         print("=" * 40)
 
-        # Load processed data
         df = pd.read_csv('data/processed/insurance_processed.csv')
         print(f"Dataset loaded: {df.shape[0]} records, {df.shape[1]} features")
 
-        # Handle missing values
         if df['age_group'].isnull().sum() > 0:
             df['age_group'].fillna('18-29', inplace=True)
             print("Fixed missing age_group values")
@@ -130,7 +105,6 @@ class XGBoostOptimizer:
 
         df_xgb = df.copy()
 
-        # Label encoding for XGBoost efficiency
         label_encoders = {}
         categorical_features = ['sex', 'smoker', 'region', 'bmi_category', 'age_group']
 
@@ -141,14 +115,12 @@ class XGBoostOptimizer:
                 label_encoders[feature] = le
                 print(f"Label encoded {feature}: {list(le.classes_)}")
 
-        # Select features for modeling
         exclude_features = ['charges', 'log_charges']
         feature_columns = [col for col in df_xgb.columns if col not in exclude_features]
 
         X = df_xgb[feature_columns]
         y = df_xgb['charges']
 
-        # Handle any remaining NaN values
         if X.isnull().sum().sum() > 0:
             X = X.fillna(0)
             print("Filled remaining NaN values with 0")
@@ -169,12 +141,10 @@ class XGBoostOptimizer:
         print("DATA SPLITTING (CONSISTENT WITH BASELINE)")
         print("=" * 40)
 
-        # First split: 70% train, 30% temp
         X_train, X_temp, y_train, y_temp = train_test_split(
             X, y, test_size=0.3, random_state=42, stratify=pd.qcut(y, q=5, duplicates='drop')
         )
 
-        # Second split: 15% validation, 15% test from the 30%
         X_val, X_test, y_val, y_test = train_test_split(
             X_temp, y_temp, test_size=0.5, random_state=42,
             stratify=pd.qcut(y_temp, q=3, duplicates='drop')
@@ -195,27 +165,20 @@ class XGBoostOptimizer:
         print("FOCUSED HYPERPARAMETER SEARCH SPACE")
         print("=" * 40)
 
-        # Focused search space based on baseline findings
         param_grid = {
-            # Learning rate: Lower values for better generalization
             'learning_rate': [0.01, 0.03, 0.05, 0.07, 0.1],
 
-            # Number of estimators: Moderate range with early stopping
             'n_estimators': [100, 200, 300, 500],
 
-            # Tree complexity: Reduce overfitting
-            'max_depth': [3, 4, 5, 6],  # Shallower trees to reduce overfitting
-            'min_child_weight': [3, 5, 7, 10, 15],  # Higher values to prevent overfitting
+            'max_depth': [3, 4, 5, 6],
+            'min_child_weight': [3, 5, 7, 10, 15],
 
-            # Sampling for regularization
             'subsample': [0.6, 0.7, 0.8, 0.9],
             'colsample_bytree': [0.6, 0.7, 0.8, 0.9],
 
-            # Regularization: Key focus to reduce overfitting
-            'reg_alpha': [0, 0.01, 0.1, 0.5, 1.0, 2.0],  # L1 regularization
-            'reg_lambda': [1.0, 2.0, 5.0, 10.0, 20.0],   # L2 regularization (higher values)
+            'reg_alpha': [0, 0.01, 0.1, 0.5, 1.0, 2.0],
+            'reg_lambda': [1.0, 2.0, 5.0, 10.0, 20.0],
 
-            # Minimum split loss: Prevent overfitting
             'gamma': [0, 0.1, 0.5, 1.0, 2.0, 5.0],
         }
 
@@ -240,7 +203,6 @@ class XGBoostOptimizer:
         print("SYSTEMATIC HYPERPARAMETER OPTIMIZATION")
         print("=" * 40)
 
-        # Base parameters focused on reducing overfitting
         base_params = {
             'objective': 'reg:squarederror',
             'eval_metric': 'rmse',
@@ -250,29 +212,25 @@ class XGBoostOptimizer:
             'verbosity': 0
         }
 
-        # Create XGBoost regressor
         xgb_model = XGBRegressor(**base_params)
 
-        # Define search space
         param_grid = self.define_focused_search_space()
 
-        # Create RandomizedSearchCV with cross-validation
         print(f"\nStarting hyperparameter optimization...")
         print(f"Using 5-fold cross-validation with 300 parameter combinations")
 
         random_search = RandomizedSearchCV(
             estimator=xgb_model,
             param_distributions=param_grid,
-            n_iter=300,  # More iterations for better optimization
-            cv=5,        # 5-fold cross-validation
-            scoring='r2',  # Optimize for R² score
-            n_jobs=-1,   # Use all CPU cores
-            verbose=1,   # Show progress
+            n_iter=300,
+            cv=5,
+            scoring='r2',
+            n_jobs=-1,
+            verbose=1,
             random_state=42,
             return_train_score=True
         )
 
-        # Start optimization
         optimization_start = time.time()
 
         print(f"🔄 Optimization in progress (this will take ~10-15 minutes)...")
@@ -282,11 +240,9 @@ class XGBoostOptimizer:
 
         print(f"\n✅ Optimization completed in {optimization_time/60:.1f} minutes")
 
-        # Extract best model and parameters
         self.model = random_search.best_estimator_
         self.best_params = random_search.best_params_
 
-        # Store optimization results
         self.optimization_history = {
             'best_cv_score': random_search.best_score_,
             'cv_results': random_search.cv_results_,
@@ -329,24 +285,20 @@ class XGBoostOptimizer:
         print("OPTIMIZED MODEL EVALUATION")
         print("=" * 40)
 
-        # Make predictions on all sets
         y_train_pred = self.model.predict(X_train)
         y_val_pred = self.model.predict(X_val)
         y_test_pred = self.model.predict(X_test)
 
-        # Calculate metrics
         train_metrics = self.calculate_comprehensive_metrics(y_train, y_train_pred, "Training")
         val_metrics = self.calculate_comprehensive_metrics(y_val, y_val_pred, "Validation")
         test_metrics = self.calculate_comprehensive_metrics(y_test, y_test_pred, "Test")
 
-        # Store performance metrics
         self.performance_metrics = {
             'training': train_metrics,
             'validation': val_metrics,
             'test': test_metrics
         }
 
-        # Check overfitting
         train_test_gap = train_metrics['r2_score'] - test_metrics['r2_score']
         print(f"\n🔍 Overfitting Analysis:")
         print(f"  Training R²: {train_metrics['r2_score']:.4f}")
@@ -360,7 +312,6 @@ class XGBoostOptimizer:
         else:
             print(f"  🚨 Significant overfitting (gap > 0.10)")
 
-        # Cross-validation for robustness
         cv_scores = cross_val_score(self.model, X_train, y_train, cv=5, scoring='r2')
         print(f"\n5-Fold CV R² Score: {cv_scores.mean():.4f} (±{cv_scores.std() * 2:.4f})")
 
@@ -376,12 +327,10 @@ class XGBoostOptimizer:
             print("❌ Baseline results not available for comparison")
             return
 
-        # Extract metrics
         linear_r2 = self.baseline_results['linear_r2']
         xgb_baseline_r2 = self.baseline_results['xgboost_baseline_r2']
         optimized_r2 = self.performance_metrics['test']['r2_score']
 
-        # Calculate improvements
         vs_linear = optimized_r2 - linear_r2
         vs_xgb_baseline = optimized_r2 - xgb_baseline_r2
 
@@ -394,7 +343,6 @@ class XGBoostOptimizer:
 
         print(f"\n🎯 Target Achievement Analysis:")
 
-        # Professor's target (R² > 0.86)
         if optimized_r2 > 0.86:
             print(f"  ✅ PROFESSOR'S TARGET ACHIEVED: R² = {optimized_r2:.4f} > 0.86")
         else:
@@ -402,7 +350,6 @@ class XGBoostOptimizer:
             print(f"  ❌ Professor's target missed: R² = {optimized_r2:.4f} < 0.86")
             print(f"     Need additional {gap_to_target:.4f} improvement")
 
-        # Thesis target (R² > 0.87)
         if optimized_r2 > 0.87:
             print(f"  ✅ THESIS TARGET ACHIEVED: R² = {optimized_r2:.4f} > 0.87")
         else:
@@ -410,13 +357,11 @@ class XGBoostOptimizer:
             print(f"  ⚠️  Thesis target not achieved: R² = {optimized_r2:.4f} < 0.87")
             print(f"     Need additional {gap_to_thesis:.4f} improvement")
 
-        # Linear Regression comparison
         if vs_linear > 0:
             print(f"  ✅ BEAT LINEAR REGRESSION: +{vs_linear:.4f} improvement")
         else:
             print(f"  ❌ Did not beat Linear Regression: {vs_linear:.4f} behind")
 
-        # Practical significance
         if vs_linear >= 0.01:
             print(f"  ✅ Practically significant improvement over Linear Regression")
         else:
@@ -428,7 +373,6 @@ class XGBoostOptimizer:
         print("OPTIMIZED MODEL FEATURE IMPORTANCE")
         print("=" * 40)
 
-        # Get feature importance
         importance_types = ['weight', 'gain', 'cover']
         importance_data = {}
 
@@ -436,7 +380,6 @@ class XGBoostOptimizer:
             importance = self.model.get_booster().get_score(importance_type=imp_type)
             importance_data[imp_type] = importance
 
-        # Create DataFrame
         feature_importance_df = pd.DataFrame(index=self.feature_names)
         for imp_type in importance_types:
             importance_values = [importance_data[imp_type].get(feature, 0) for feature in self.feature_names]
@@ -447,7 +390,6 @@ class XGBoostOptimizer:
         print("Top 10 Features (by gain):")
         print(feature_importance_df.head(10).round(2))
 
-        # Visualize feature importance
         self.visualize_optimization_results(feature_importance_df)
 
         return feature_importance_df
@@ -456,7 +398,6 @@ class XGBoostOptimizer:
         """Create comprehensive visualizations of optimization results."""
         fig, axes = plt.subplots(2, 2, figsize=(16, 12))
 
-        # 1. Feature importance by gain
         top_features = feature_importance_df.head(8)
         axes[0, 0].barh(range(len(top_features)), top_features['gain'], color='skyblue')
         axes[0, 0].set_yticks(range(len(top_features)))
@@ -465,7 +406,6 @@ class XGBoostOptimizer:
         axes[0, 0].set_title('Optimized XGBoost Feature Importance')
         axes[0, 0].grid(axis='x', alpha=0.3)
 
-        # 2. Model comparison
         models = ['Linear\nRegression', 'XGBoost\nBaseline', 'XGBoost\nOptimized']
         r2_scores = [
             self.baseline_results['linear_r2'],
@@ -482,12 +422,10 @@ class XGBoostOptimizer:
         axes[0, 1].legend()
         axes[0, 1].grid(axis='y', alpha=0.3)
 
-        # Add value labels on bars
         for bar, score in zip(bars, r2_scores):
             axes[0, 1].text(bar.get_x() + bar.get_width()/2, score + 0.005,
                            f'{score:.4f}', ha='center', va='bottom', fontweight='bold')
 
-        # 3. Prediction vs Actual (test set)
         y_test_pred = self.model.predict(self.X_test) if hasattr(self, 'X_test') else None
         if y_test_pred is not None and hasattr(self, 'y_test'):
             axes[1, 0].scatter(self.y_test, y_test_pred, alpha=0.6, color='green')
@@ -498,12 +436,10 @@ class XGBoostOptimizer:
             axes[1, 0].set_title('Optimized Model: Predicted vs Actual')
             axes[1, 0].grid(alpha=0.3)
 
-        # 4. Hyperparameter impact visualization
         if self.best_params:
-            param_names = list(self.best_params.keys())[:6]  # Top 6 parameters
+            param_names = list(self.best_params.keys())[:6]
             param_values = [self.best_params[name] for name in param_names]
 
-            # Normalize values for visualization
             param_values_norm = []
             for val in param_values:
                 if isinstance(val, (int, float)):
@@ -528,14 +464,12 @@ class XGBoostOptimizer:
         print("SAVING OPTIMIZED MODEL AND RESULTS")
         print("=" * 40)
 
-        # Save optimized model
         os.makedirs('results/models', exist_ok=True)
         model_path = 'results/models/xgboost_optimized_model.pkl'
         with open(model_path, 'wb') as f:
             pickle.dump(self.model, f)
         print(f"✅ Optimized XGBoost model saved: {model_path}")
 
-        # Generate comprehensive summary
         summary = {
             'model_type': 'XGBoost Regressor - Hyperparameter Optimized',
             'optimization_strategy': 'Focused regularization to reduce overfitting',
@@ -565,13 +499,11 @@ class XGBoostOptimizer:
             'timestamp': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         }
 
-        # Save summary
         summary_path = 'results/models/xgboost_optimized_summary.json'
         with open(summary_path, 'w') as f:
             json.dump(summary, f, indent=2, default=self._json_serialize)
         print(f"✅ Optimization summary saved: {summary_path}")
 
-        # Print final summary
         self._print_optimization_summary(summary)
 
         return summary
@@ -642,42 +574,31 @@ class XGBoostOptimizer:
 
 def main():
     """Main execution function for XGBoost optimization."""
-    # Create results directories
     os.makedirs('results/plots', exist_ok=True)
     os.makedirs('results/models', exist_ok=True)
 
-    # Initialize optimizer
     optimizer = XGBoostOptimizer()
 
-    # Load baseline results
     if not optimizer.load_baseline_results():
         print("❌ Cannot proceed without baseline results!")
         return
 
-    # Load and prepare data
     df = optimizer.load_and_prepare_data()
     X, y, label_encoders = optimizer.prepare_features_for_optimization(df)
 
-    # Split data consistently
     X_train, X_val, X_test, y_train, y_val, y_test = optimizer.split_data_consistent(X, y)
 
-    # Store test data for visualization
     optimizer.X_test = X_test
     optimizer.y_test = y_test
 
-    # Optimize XGBoost hyperparameters
     optimization_time = optimizer.optimize_xgboost(X_train, y_train, X_val, y_val)
 
-    # Evaluate optimized model
     test_metrics = optimizer.evaluate_optimized_model(X_train, y_train, X_val, y_val, X_test, y_test)
 
-    # Compare with all baselines
     optimizer.compare_with_all_baselines()
 
-    # Analyze feature importance
     feature_importance = optimizer.analyze_optimized_feature_importance()
 
-    # Save results
     summary = optimizer.save_optimized_model(optimization_time)
 
     print("\n" + "=" * 60)

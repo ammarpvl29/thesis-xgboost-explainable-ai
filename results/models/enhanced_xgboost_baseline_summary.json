@@ -1,0 +1,75 @@
+{
+  "model_type": "Enhanced XGBoost Baseline",
+  "enhancement_strategy": "High-quality data preprocessing + strategic feature engineering",
+  "data_quality_score": 10,
+  "features_used": 17,
+  "feature_names": [
+    "age",
+    "sex",
+    "bmi",
+    "children",
+    "smoker",
+    "region",
+    "age_group",
+    "bmi_category",
+    "high_risk",
+    "family_size",
+    "smoker_bmi_interaction",
+    "smoker_age_interaction",
+    "high_risk_age_interaction",
+    "extreme_obesity",
+    "senior_smoker",
+    "young_high_bmi",
+    "cost_complexity_score"
+  ],
+  "baseline_parameters": {
+    "n_estimators": 200,
+    "max_depth": 8,
+    "learning_rate": 0.1,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "reg_lambda": 1,
+    "min_child_weight": 1
+  },
+  "performance_metrics": {
+    "training": {
+      "r2_score": 0.9989254315723133,
+      "rmse": 400.82481920151145,
+      "mae": 186.5949301658654,
+      "mape": 3.0998053563912675
+    },
+    "validation": {
+      "r2_score": 0.8221199412882287,
+      "rmse": 5236.089497157595,
+      "mae": 2998.367134069873,
+      "mape": 37.44593283630632
+    },
+    "test": {
+      "r2_score": 0.8014018023791382,
+      "rmse": 4973.712270445859,
+      "mae": 2783.216323057828,
+      "mape": 36.12212334009453
+    }
+  },
+  "baseline_comparison": {
+    "enhanced_linear_r2": 0.8566430751906364,
+    "enhanced_xgboost_r2": 0.8014018023791382,
+    "improvement": -0.055241272811498265,
+    "relative_improvement_percent": -6.448575189755072,
+    "xgboost_superiority": false
+  },
+  "thesis_target_achievement": {
+    "target_r2": 0.87,
+    "achieved_r2": 0.8014018023791382,
+    "target_met": false,
+    "gap_to_target": 0.06859819762086183
+  },
+  "overfitting_analysis": {
+    "train_r2": 0.9989254315723133,
+    "test_r2": 0.8014018023791382,
+    "overfitting_gap": 0.19752362919317512
+  },
+  "training_time_seconds": 0.3359243869781494,
+  "next_steps": "Hyperparameter optimization if target not achieved, then XAI implementation",
+  "timestamp": "2025-09-30 19:17:25"
+}

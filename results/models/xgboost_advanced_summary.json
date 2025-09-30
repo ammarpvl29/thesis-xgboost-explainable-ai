@@ -1,0 +1,123 @@
+{
+  "model_type": "XGBoost Advanced - Feature Engineering + Ensemble Optimization",
+  "optimization_strategy": "Advanced feature engineering + Bayesian/Enhanced optimization + Ensemble methods",
+  "advanced_techniques_applied": {
+    "polynomial_features": true,
+    "domain_specific_features": true,
+    "advanced_interactions": true,
+    "ensemble_methods": true,
+    "bayesian_optimization": false
+  },
+  "feature_engineering_summary": {
+    "total_features": 41,
+    "polynomial_features_added": "~8 (BMI\u00b2, age\u00b2, interactions)",
+    "domain_features_added": "~10 (obesity categories, risk profiles)",
+    "interaction_features_added": "~15 (triple interactions, polynomials)",
+    "scaling_applied": "StandardScaler for advanced numerical features"
+  },
+  "model_selection": {
+    "single_model_used": false,
+    "ensemble_used": true,
+    "ensemble_components": 4
+  },
+  "features_used": 41,
+  "feature_names": [
+    "age",
+    "sex",
+    "bmi",
+    "children",
+    "smoker",
+    "region",
+    "age_group",
+    "bmi_category",
+    "high_risk",
+    "family_size",
+    "smoker_bmi_interaction",
+    "smoker_age_interaction",
+    "high_risk_age_interaction",
+    "extreme_obesity",
+    "senior_smoker",
+    "young_high_bmi",
+    "cost_complexity_score",
+    "bmi_squared",
+    "bmi_cubed",
+    "age_squared",
+    "age_cubed",
+    "smoker_bmi_age_interaction",
+    "smoker_bmi_squared",
+    "smoker_age_squared",
+    "morbid_obesity",
+    "senior_citizen",
+    "middle_aged",
+    "triple_risk",
+    "comprehensive_risk_score",
+    "family_complexity",
+    "bmi_category_age_squared",
+    "bmi_category_children",
+    "bmi_squared_scaled",
+    "bmi_cubed_scaled",
+    "age_squared_scaled",
+    "age_cubed_scaled",
+    "smoker_bmi_age_interaction_scaled",
+    "smoker_bmi_squared_scaled",
+    "smoker_age_squared_scaled",
+    "comprehensive_risk_score_scaled",
+    "family_complexity_scaled"
+  ],
+  "best_hyperparameters": {
+    "subsample": 0.9,
+    "reg_lambda": 2.5,
+    "reg_alpha": 0.2,
+    "n_estimators": 800,
+    "min_child_weight": 6,
+    "max_depth": 3,
+    "learning_rate": 0.02,
+    "gamma": 0.1,
+    "colsample_bytree": 0.8
+  },
+  "performance_metrics": {
+    "training": {
+      "r2_score": 0.8819672659605189,
+      "rmse": 4200.865730694829,
+      "mae": 2348.718887340511,
+      "mape": 27.746612772019457
+    },
+    "validation": {
+      "r2_score": 0.8545025272040462,
+      "rmse": 4735.557933053959,
+      "mae": 2699.004403245297,
+      "mape": 32.79716181541051
+    },
+    "test": {
+      "r2_score": 0.8528393821010269,
+      "rmse": 4281.429603997541,
+      "mae": 2373.025328404462,
+      "mape": 29.004897816589093
+    }
+  },
+  "comprehensive_comparison": {
+    "linear_regression_r2": 0.8636931459790063,
+    "phase3b_enhanced_r2": 0.8618192827689629,
+    "advanced_r2": 0.8528393821010269,
+    "improvement_vs_linear": -0.010853763877979317,
+    "improvement_vs_phase3b": -0.00897990066793597
+  },
+  "target_achievement": {
+    "professor_target_0_86": false,
+    "thesis_target_0_87": false,
+    "beat_linear_regression": false,
+    "beat_phase3b": false
+  },
+  "training_times": {
+    "optimization_time_minutes": 4.435360129674276,
+    "single_model_time_seconds": 0.6929945945739746,
+    "ensemble_time_minutes": 0.09498034318288168
+  },
+  "overfitting_analysis": {
+    "train_r2": 0.8819672659605189,
+    "test_r2": 0.8528393821010269,
+    "overfitting_gap": 0.029127883859491943
+  },
+  "next_steps": "Ready for Phase 4: Explainable AI (SHAP & LIME) implementation",
+  "timestamp": "2025-09-30 19:27:15"
+}
