@@ -1,0 +1,163 @@
+[
+  {
+    "patient_profile": "Low Cost Patient",
+    "cost_estimate": "$2,056.05",
+    "actual_cost": "$1,121.87",
+    "prediction_accuracy": "16.7%",
+    "key_cost_drivers": [],
+    "cost_reducers": [
+      {
+        "factor": "bmi",
+        "impact": "-$18,711.68"
+      },
+      {
+        "factor": "smoker",
+        "impact": "-$18,711.68"
+      },
+      {
+        "factor": "smoker_bmi_interaction",
+        "impact": "-$18,711.68"
+      },
+      {
+        "factor": "age",
+        "impact": "-$7,868.90"
+      },
+      {
+        "factor": "high_risk",
+        "impact": "-$7,868.90"
+      }
+    ],
+    "actionable_recommendations": [
+      "\ud83c\udfc3 Weight Management: Achieving a healthy BMI through diet and exercise could reduce your cost burden substantially"
+    ]
+  },
+  {
+    "patient_profile": "Medium Cost Patient",
+    "cost_estimate": "$11,986.53",
+    "actual_cost": "$9,386.16",
+    "prediction_accuracy": "72.3%",
+    "key_cost_drivers": [],
+    "cost_reducers": [
+      {
+        "factor": "bmi",
+        "impact": "-$18,502.36"
+      },
+      {
+        "factor": "smoker",
+        "impact": "-$18,502.36"
+      },
+      {
+        "factor": "smoker_bmi_interaction",
+        "impact": "-$18,502.36"
+      },
+      {
+        "factor": "age",
+        "impact": "-$8,078.45"
+      },
+      {
+        "factor": "high_risk",
+        "impact": "-$8,078.45"
+      }
+    ],
+    "actionable_recommendations": [
+      "\ud83c\udfc3 Weight Management: Achieving a healthy BMI through diet and exercise could reduce your cost burden substantially"
+    ]
+  },
+  {
+    "patient_profile": "High Cost Patient",
+    "cost_estimate": "$52,451.51",
+    "actual_cost": "$63,770.43",
+    "prediction_accuracy": "82.3%",
+    "key_cost_drivers": [
+      {
+        "factor": "bmi",
+        "impact": "+$18,406.46"
+      },
+      {
+        "factor": "smoker",
+        "impact": "+$18,406.46"
+      },
+      {
+        "factor": "smoker_bmi_interaction",
+        "impact": "+$18,406.46"
+      },
+      {
+        "factor": "age",
+        "impact": "+$7,648.95"
+      },
+      {
+        "factor": "high_risk",
+        "impact": "+$7,648.95"
+      }
+    ],
+    "cost_reducers": [],
+    "actionable_recommendations": [
+      "\ud83c\udfc3 Weight Management: Achieving a healthy BMI through diet and exercise could reduce your cost burden substantially"
+    ]
+  },
+  {
+    "patient_profile": "Young Smoker",
+    "cost_estimate": "$16,632.44",
+    "actual_cost": "$20,167.34",
+    "prediction_accuracy": "82.5%",
+    "key_cost_drivers": [
+      {
+        "factor": "bmi",
+        "impact": "+$18,575.86"
+      },
+      {
+        "factor": "smoker",
+        "impact": "+$18,575.86"
+      },
+      {
+        "factor": "smoker_bmi_interaction",
+        "impact": "+$18,575.86"
+      }
+    ],
+    "cost_reducers": [
+      {
+        "factor": "age",
+        "impact": "-$7,808.60"
+      },
+      {
+        "factor": "high_risk",
+        "impact": "-$7,808.60"
+      }
+    ],
+    "actionable_recommendations": [
+      "\ud83c\udfc3 Weight Management: Achieving a healthy BMI through diet and exercise could reduce your cost burden substantially"
+    ]
+  },
+  {
+    "patient_profile": "Old Non-Smoker",
+    "cost_estimate": "$12,727.17",
+    "actual_cost": "$12,029.29",
+    "prediction_accuracy": "94.2%",
+    "key_cost_drivers": [],
+    "cost_reducers": [
+      {
+        "factor": "bmi",
+        "impact": "-$18,790.25"
+      },
+      {
+        "factor": "smoker",
+        "impact": "-$18,790.25"
+      },
+      {
+        "factor": "smoker_bmi_interaction",
+        "impact": "-$18,790.25"
+      },
+      {
+        "factor": "age",
+        "impact": "-$8,107.31"
+      },
+      {
+        "factor": "high_risk",
+        "impact": "-$8,107.31"
+      }
+    ],
+    "actionable_recommendations": [
+      "\ud83c\udfc3 Weight Management: Achieving a healthy BMI through diet and exercise could reduce your cost burden substantially"
+    ]
+  }
+]

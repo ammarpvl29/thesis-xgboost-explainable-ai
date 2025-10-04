@@ -1,0 +1,68 @@
+{
+  "analysis_date": "2025-10-04 17:32:52",
+  "phase": "Phase 4 - Step 1: SHAP Global Explanations",
+  "model_type": "StackingRegressor",
+  "dataset_size": 1338,
+  "shap_sample_size": 200,
+  "base_value_expected_cost": 14120.744675902408,
+  "top_5_features": [
+    {
+      "feature": "smoker_bmi_interaction",
+      "mean_abs_shap": 6397.51510782228
+    },
+    {
+      "feature": "age",
+      "mean_abs_shap": 3041.679997166857
+    },
+    {
+      "feature": "high_risk_age_interaction",
+      "mean_abs_shap": 1779.6284505270573
+    },
+    {
+      "feature": "smoker_age_interaction",
+      "mean_abs_shap": 1388.6812351066512
+    },
+    {
+      "feature": "cost_complexity_score",
+      "mean_abs_shap": 937.7407394994304
+    }
+  ],
+  "critical_interactions": [
+    {
+      "feature": "smoker_bmi_interaction",
+      "description": "Smoking-BMI Synergy",
+      "mean_abs_shap_impact": 6397.515107822281
+    },
+    {
+      "feature": "high_risk_age_interaction",
+      "description": "High Risk Age Amplification",
+      "mean_abs_shap_impact": 1779.6284505270578
+    },
+    {
+      "feature": "smoker_age_interaction",
+      "description": "Smoking-Age Cumulative Effect",
+      "mean_abs_shap_impact": 1388.6812351066508
+    },
+    {
+      "feature": "high_risk",
+      "description": "High Risk Profile",
+      "mean_abs_shap_impact": 554.8330280582945
+    }
+  ],
+  "visualizations_generated": [
+    "shap_summary_beeswarm.png",
+    "shap_bar_importance.png",
+    "shap_waterfall_low_cost_patient.png",
+    "shap_waterfall_medium_cost_patient.png",
+    "shap_waterfall_high_cost_patient.png",
+    "shap_dependence_smoker_bmi_interaction.png",
+    "shap_dependence_age.png",
+    "shap_dependence_high_risk_age_interaction.png",
+    "shap_dependence_smoker_age_interaction.png"
+  ],
+  "key_findings": {
+    "most_important_feature": "smoker_bmi_interaction",
+    "most_important_feature_impact": 6397.51510782228,
+    "smoking_related_features_in_top_5": 3
+  }
+}

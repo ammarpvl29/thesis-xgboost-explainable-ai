@@ -3,6 +3,7 @@ pandas
 numpy
 scikit-learn
 xgboost
+lightgbm
 
 # Explainable AI
 shap
@@ -19,3 +20,6 @@ ipykernel
 
 # Utilities
 tqdm
+
+# Cloud
+streamlit

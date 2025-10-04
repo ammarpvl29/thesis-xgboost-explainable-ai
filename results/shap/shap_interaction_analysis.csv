@@ -1,0 +1,5 @@
+feature,description,mean_abs_shap_impact
+smoker_bmi_interaction,Smoking-BMI Synergy,6397.515107822281
+high_risk_age_interaction,High Risk Age Amplification,1779.6284505270578
+smoker_age_interaction,Smoking-Age Cumulative Effect,1388.6812351066508
+high_risk,High Risk Profile,554.8330280582945

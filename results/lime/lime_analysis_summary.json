@@ -1,0 +1,33 @@
+{
+  "analysis_date": "2025-10-04 17:55:51",
+  "phase": "Phase 4 - Step 2: LIME Local Explanations",
+  "model_type": "StackingRegressor",
+  "explainer_type": "LimeTabularExplainer",
+  "dataset_size": 1338,
+  "patients_analyzed": 5,
+  "num_features_per_explanation": 10,
+  "num_samples_per_explanation": 5000,
+  "patient_profiles_analyzed": [
+    "Low Cost Patient",
+    "Medium Cost Patient",
+    "High Cost Patient",
+    "Young Smoker",
+    "Old Non-Smoker"
+  ],
+  "average_prediction_accuracy": 69.58945161384091,
+  "visualizations_generated": [
+    "lime_explanation_low_cost_patient.png",
+    "lime_explanation_medium_cost_patient.png",
+    "lime_explanation_high_cost_patient.png",
+    "lime_explanation_young_smoker.png",
+    "lime_explanation_old_non-smoker.png",
+    "lime_comparison_all_patients.png",
+    "lime_high_vs_low_cost.png"
+  ],
+  "patient_reports_generated": 5,
+  "key_findings": {
+    "most_common_cost_driver": "smoker_bmi_interaction",
+    "average_top_contribution": 18597.321877191553,
+    "actionable_recommendations_provided": 5
+  }
+}
