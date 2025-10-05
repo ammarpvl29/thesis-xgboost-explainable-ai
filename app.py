@@ -552,7 +552,7 @@ def main():
                 <strong>Bachelor Thesis Project</strong><br>
                 Ammar Pavel Zamora Siregar (1202224044)<br>
                 School of Informatics, Universitas Telkom, 2025<br>
-                <em>Supervised by: Indra Aulia, S.TI., M.Kom. & Nurul Ilmi, S.Kom, M.T</em>
+                <em>Supervised by: Achmad Udin Zailani, S.Kom., M.Kom. & Nurul Ilmi, S.Kom, M.T</em>
             </p>
             <p style="margin-top: 0.5rem;">
                 ⚠️ <strong>Disclaimer:</strong> This tool is for educational purposes only.
