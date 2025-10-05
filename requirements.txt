@@ -1,6 +1,15 @@
-# Core ML and Data Science
+# Streamlit Dashboard Requirements
+# Bachelor Thesis - Healthcare Cost Predictor
+# Ammar Pavel Zamora Siregar (1202224044)
+
+# Core Framework (MUST BE FIRST for Streamlit Cloud)
+streamlit
+
+# Data Processing
 pandas
 numpy
+
+# Machine Learning
 scikit-learn
 xgboost
 lightgbm
@@ -14,12 +23,6 @@ matplotlib
 seaborn
 plotly
 
-# Jupyter and Development
-jupyter
-ipykernel
-
 # Utilities
+scipy
 tqdm
-
-# Cloud
-streamlit
