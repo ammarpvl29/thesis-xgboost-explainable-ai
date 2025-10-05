@@ -7,13 +7,15 @@
 ## Project Overview
 This thesis project implements **XGBoost with Explainable AI (SHAP & LIME)** for patient treatment cost prediction using the Kaggle Insurance Cost dataset. The goal is to create transparent, interpretable healthcare cost predictions that empower patients in their decision-making process.
 
-## 🎯 Current Status: Phase 4 COMPLETE - Explainable AI Implementation Success! 🎉
+## 🎯 Current Status: Phase 5 COMPLETE - Dashboard Deployed Successfully! 🎉
 
 ### 🏆 MAJOR ACHIEVEMENTS:
 - ✅ **Phase 3**: Thesis Target R² = 0.8770 ≥ 0.87 ACHIEVED
 - ✅ **Phase 4 Step 1**: SHAP Global Explanations IMPLEMENTED
 - ✅ **Phase 4 Step 2**: LIME Local Explanations IMPLEMENTED
-- 🔄 **Phase 4 Step 3**: Streamlit Dashboard (In Progress)
+- ✅ **Phase 4 Step 3**: Streamlit Dashboard DEPLOYED
+- ✅ **Phase 5**: Production Deployment COMPLETE
+- 🌐 **Live Dashboard**: https://healthcare-cost-predictor.streamlit.app/
 
 ---
 
@@ -197,16 +199,18 @@ This thesis project implements **XGBoost with Explainable AI (SHAP & LIME)** for
 - [x] **Phase 4:** Explainable AI Implementation ✅
   - [x] **Step 1**: SHAP global explanations (9 visualizations)
   - [x] **Step 2**: LIME local explanations (7 visualizations)
-  - [ ] **Step 3**: Streamlit dashboard integration (In Progress)
-  - [ ] **Step 4**: What-if scenario analysis
-- [ ] **Phase 5:** Dashboard Deployment
-  - [ ] Streamlit Community Cloud deployment
-  - [ ] Patient-facing interactive interface
-  - [ ] Real-time cost prediction with explanations
-- [ ] **Phase 6:** Documentation & Paper Completion
-  - [ ] Complete Chapter 4 with SHAP & LIME results
-  - [ ] Methodology documentation
-  - [ ] Final thesis submission
+  - [x] **Step 3**: Streamlit dashboard integration
+  - [x] **Step 4**: What-if scenario analysis
+- [x] **Phase 5:** Dashboard Deployment ✅
+  - [x] Streamlit Community Cloud deployment
+  - [x] Patient-facing interactive interface
+  - [x] Real-time cost prediction with explanations
+  - [x] Live URL: https://healthcare-cost-predictor.streamlit.app/
+- [x] **Phase 6:** Documentation & Paper Completion ✅
+  - [x] Complete Chapter 4 with SHAP & LIME results
+  - [x] Methodology documentation
+  - [x] Conference paper (IEEE format)
+  - [ ] Final thesis submission (Pending)
 
 ---
 
@@ -390,26 +394,64 @@ thesis-xgboost-explainable-ai/
 
 ---
 
+## 🌐 Live Dashboard
+
+**🚀 Try the Interactive Dashboard:**
+- **URL**: https://healthcare-cost-predictor.streamlit.app/
+- **Features**:
+  - ✅ Real-time cost prediction with confidence intervals
+  - ✅ SHAP global feature importance analysis
+  - ✅ LIME patient-specific explanations (~8 seconds)
+  - ✅ What-if scenario analysis (smoking cessation, weight management)
+  - ✅ Risk categorization (Low/Medium/High)
+  - ✅ Comparison with population/smoker averages
+
+**Dashboard Screenshots:**
+- Patient input form with WHO BMI categorization
+- Interactive SHAP waterfall plots
+- LIME feature contribution analysis
+- What-if savings calculator ($8,000-$45,200 potential)
+
+---
+
+## 📄 Conference Paper
+
+**IEEE Conference Paper**: `conference-paper.tex`
+
+**Paper Details:**
+- **Title**: Interpretable Healthcare Cost Prediction Using XGBoost with Dual Explainable AI Framework
+- **Authors**:
+  - Ammar Pavel Zamora Siregar
+  - Achmad Udin Zailani, S.Kom., M.Kom.
+  - Nurul Ilmi, S.Kom, M.T
+- **Institution**: Universitas Telkom, School of Informatics
+- **Format**: IEEE Conference Template (A4)
+
+**Compile Paper:**
+```bash
+pdflatex conference-paper.tex
+bibtex conference-paper
+pdflatex conference-paper.tex
+pdflatex conference-paper.tex
+```
+
+Or use **Overleaf** (online LaTeX editor) for easier compilation.
+
+---
+
 ## 🔄 Next Steps
 
-### Phase 4 Step 3: Streamlit Dashboard (In Progress)
-- [ ] Build interactive patient input form
-- [ ] Integrate cost prediction with confidence intervals
-- [ ] Add SHAP explanations visualization
-- [ ] Add LIME explanations visualization
-- [ ] Implement what-if scenario analysis (smoking cessation impact)
+### Conference Presentation
+- [x] Dashboard deployed and accessible
+- [x] Conference paper completed
+- [ ] Presentation slides preparation
+- [ ] Practice demo flow (5-minute presentation)
 
-### Phase 5: Deployment
-- [ ] Test dashboard locally
-- [ ] Deploy to Streamlit Community Cloud (FREE)
-- [ ] Conference presentation preparation
-- [ ] Patient-facing interface finalization
-
-### Phase 6: Final Documentation
-- [ ] Complete Chapter 4 with SHAP & LIME sections
-- [ ] Methodology chapter completion
+### Final Thesis Submission
+- [ ] Complete all thesis chapters
 - [ ] Abstract and conclusions
-- [ ] Final thesis submission
+- [ ] Final thesis defense preparation
+- [ ] Submission to university repository
 
 ---
 
@@ -454,9 +496,12 @@ This research contributes to healthcare AI transparency by combining:
 - **Patient Empowerment**: Quantified cost insights ($74,518 lifestyle impact delta)
 - **Production-Ready**: Fast computation (~8s per explanation), excellent generalization
 
-**University**: Universitas Telkom, Fakultas Informatika
+**University**: Universitas Telkom, School of Informatics
 **Student**: Ammar Pavel Zamora Siregar (1202224044)
-**Expected Completion**: 2025
+**Supervisors**:
+- Achmad Udin Zailani, S.Kom., M.Kom.
+- Nurul Ilmi, S.Kom, M.T
+**Year**: 2025
 
 ---
 
@@ -475,6 +520,7 @@ This thesis project is for academic purposes. Dataset used is publicly available
 
 ---
 
-**Last Updated**: October 4, 2025
-**Status**: Phase 4 Explainable AI Implementation Complete ✅
-**Next Milestone**: Streamlit Dashboard Integration 🚀
+**Last Updated**: October 5, 2025
+**Status**: Phase 5 Dashboard Deployment Complete ✅
+**Live Dashboard**: https://healthcare-cost-predictor.streamlit.app/
+**Conference Paper**: Ready for submission 📄
