@@ -61,34 +61,22 @@ FEATURE_COLS = [
 @st.cache_resource
 def load_model():
     """Load the trained ensemble model"""
-    model_path = 'results/models/final_best_model.pkl'
     try:
-        with open(model_path, 'rb') as f:
+        with open('results/models/final_best_model.pkl', 'rb') as f:
             model = pickle.load(f)
         return model
-    except FileNotFoundError:
-        st.error(f"🗂️ Model file not found at `{model_path}`. "
-                "Please ensure the model has been trained and saved. "
-                "Run the training notebook first: `notebooks/04d_final_push_0.87.py`")
-        return None
     except Exception as e:
-        st.error(f"Error loading model from `{model_path}`: {e}")
+        st.error(f"Error loading model: {e}")
         return None
 
 @st.cache_data
 def load_training_data():
     """Load training data for SHAP/LIME background"""
-    data_path = 'data/processed/insurance_enhanced_processed.csv'
     try:
-        df = pd.read_csv(data_path)
+        df = pd.read_csv('data/processed/insurance_enhanced_processed.csv')
         return df
-    except FileNotFoundError:
-        st.error(f"🗂️ Training data not found at `{data_path}`. "
-                "Please ensure the preprocessing step has been completed. "
-                "Run preprocessing first: `notebooks/00_enhanced_data_preprocessing.py`")
-        return None
     except Exception as e:
-        st.error(f"Error loading training data from `{data_path}`: {e}")
+        st.error(f"Error loading training data: {e}")
         return None
 
 @st.cache_data
@@ -217,17 +205,17 @@ def predict_cost(model, patient_features):
                 base_predictions.append(base_pred)
 
             std = np.std(base_predictions)
-            ci_lower = max(0.0, prediction - 1.96 * std)  # 95% CI, clipped at 0
+            ci_lower = prediction - 1.96 * std  # 95% CI
             ci_upper = prediction + 1.96 * std
         else:
             # Fallback: assume 15% margin
             std = prediction * 0.15
-            ci_lower = max(0.0, prediction - 1.96 * std)  # Clipped at 0
+            ci_lower = prediction - 1.96 * std
             ci_upper = prediction + 1.96 * std
     except:
         # Fallback
         std = prediction * 0.15
-        ci_lower = max(0.0, prediction - 1.96 * std)  # Clipped at 0
+        ci_lower = prediction - 1.96 * std
         ci_upper = prediction + 1.96 * std
 
     return prediction, ci_lower, ci_upper
@@ -283,11 +271,7 @@ def main():
                                        value=170.0, step=0.5,
                                        help="Your height in centimeters")
 
-            # Calculate BMI with validation
-            if height <= 0:
-                st.error("⚠️ Height must be greater than 0 cm.")
-                st.stop()
-
+            # Calculate BMI
             height_m = height / 100  # Convert cm to meters
             bmi = weight / (height_m ** 2)
             st.info(f"📊 Calculated BMI: **{bmi:.1f}**")
@@ -456,7 +440,7 @@ def main():
                     fig = lime_exp.as_pyplot_figure()
                     fig.set_size_inches(10, 6)
                     st.pyplot(fig)
-                    plt.close(fig)  # Close specific figure to prevent memory leak
+                    plt.close()
 
                     # Extract top features
                     lime_values = lime_exp.as_list()
@@ -502,7 +486,7 @@ def main():
                     fig, ax = plt.subplots(figsize=(10, 6))
                     shap.waterfall_plot(shap_values[0], show=False)
                     st.pyplot(fig)
-                    plt.close(fig)  # Close specific figure to prevent memory leak
+                    plt.close()
 
                     # Feature importance table
                     st.markdown("#### 📋 Feature Impact Summary")
