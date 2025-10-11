@@ -478,12 +478,7 @@ seaborn>=0.12.0
 plotly>=5.14.0
 
 # Dashboard (Phase 4 Step 3)
-streamlit>=1.22.0     # 🔄 In Progress
-
-# Development
-jupyter>=1.0.0
-ipykernel>=6.21.0
-tqdm>=4.65.0
+streamlit>=1.22.0     # ✅ Implemented
 ```
 
 ---

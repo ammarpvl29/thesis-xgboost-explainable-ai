@@ -255,9 +255,30 @@ def main():
 
         sex = st.radio("Sex", options=['Male', 'Female'], horizontal=True)
 
-        bmi = st.number_input("BMI (Body Mass Index)", min_value=15.0, max_value=55.0,
-                             value=25.0, step=0.1,
-                             help="Your BMI = weight(kg) / height(m)²")
+        # BMI Calculation Section
+        st.markdown("**Body Measurements**")
+        input_method = st.radio("Input Method", options=['Weight & Height', 'BMI Directly'],
+                               horizontal=True, help="Choose how to provide BMI information")
+
+        if input_method == 'Weight & Height':
+            col1, col2 = st.columns(2)
+            with col1:
+                weight = st.number_input("Weight (kg)", min_value=30.0, max_value=200.0,
+                                       value=70.0, step=0.5,
+                                       help="Your body weight in kilograms")
+            with col2:
+                height = st.number_input("Height (cm)", min_value=100.0, max_value=250.0,
+                                       value=170.0, step=0.5,
+                                       help="Your height in centimeters")
+
+            # Calculate BMI
+            height_m = height / 100  # Convert cm to meters
+            bmi = weight / (height_m ** 2)
+            st.info(f"📊 Calculated BMI: **{bmi:.1f}**")
+        else:
+            bmi = st.number_input("BMI (Body Mass Index)", min_value=15.0, max_value=55.0,
+                                 value=25.0, step=0.1,
+                                 help="Your BMI = weight(kg) / height(m)²")
 
         # Display BMI category
         bmi_cat = categorize_bmi(bmi)
@@ -332,6 +353,57 @@ def main():
                          f"${abs(prediction - nonsmoker_avg):,.0f}",
                          f"{((prediction - nonsmoker_avg)/nonsmoker_avg)*100:+.1f}%",
                          delta_color="inverse")
+
+        st.divider()
+
+        # Non-Technical Explanation Summary
+        st.markdown("### 📝 Your Cost Prediction Explained (In Simple Terms)")
+
+        # Generate simple explanation
+        explanation_parts = []
+
+        # Base explanation
+        if prediction < 10000:
+            cost_level = "relatively low"
+            cost_emoji = "😊"
+        elif prediction < 20000:
+            cost_level = "moderate"
+            cost_emoji = "😐"
+        elif prediction < 35000:
+            cost_level = "high"
+            cost_emoji = "😟"
+        else:
+            cost_level = "very high"
+            cost_emoji = "😰"
+
+        explanation_parts.append(f"{cost_emoji} Your estimated annual healthcare cost is **${prediction:,.2f}**, which is {cost_level} compared to the average.")
+
+        # Risk category explanation
+        if smoker == 'Yes' and bmi >= 30:
+            explanation_parts.append("⚠️ **High Risk Alert:** You're in our highest risk category because you're both a smoker and have a BMI in the obese range. This combination significantly increases healthcare costs.")
+        elif smoker == 'Yes':
+            explanation_parts.append("⚠️ **Smoking Impact:** Smoking is the single biggest factor increasing your healthcare costs. On average, smokers pay 280% more than non-smokers!")
+        elif bmi >= 30:
+            explanation_parts.append("⚠️ **Weight Impact:** Your BMI is in the obese category, which increases healthcare costs due to higher risk of chronic diseases.")
+        else:
+            explanation_parts.append("✅ **Good News:** You're in a lower risk category! Keep maintaining these healthy habits.")
+
+        # Age factor
+        if age >= 50:
+            explanation_parts.append(f"📅 **Age Factor:** At age {age}, healthcare costs naturally increase due to age-related health considerations.")
+        elif age < 30:
+            explanation_parts.append(f"📅 **Age Advantage:** At age {age}, you benefit from lower baseline healthcare costs associated with younger age groups.")
+
+        # Comparison insight
+        if smoker == 'Yes':
+            potential_savings = prediction - (prediction / 2.8)  # Approximate non-smoker cost
+            explanation_parts.append(f"💡 **Opportunity:** If you quit smoking, you could potentially save around **${potential_savings:,.2f}** per year!")
+        elif bmi >= 30:
+            explanation_parts.append(f"💡 **Opportunity:** Achieving a healthy BMI (18.5-24.9) could significantly reduce your annual costs.")
+
+        # Display explanation in an info box
+        explanation_text = "\n\n".join(explanation_parts)
+        st.info(explanation_text)
 
         st.divider()
 
@@ -520,9 +592,11 @@ def main():
             st.markdown("""
             **What This Tool Does:**
             - Predicts your annual healthcare costs
+            - Calculates BMI from weight & height (or enter directly)
+            - Provides simple, non-technical explanations
             - Explains what drives your costs (SHAP & LIME)
             - Shows savings from lifestyle changes
-            - Provides personalized recommendations
+            - Compares you with similar patients
 
             **How It Works:**
             - XGBoost ensemble model (R² = 0.877)

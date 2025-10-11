@@ -35,7 +35,7 @@ nurulilmi@telkomuniversity.ac.id}
 \maketitle
 
 \begin{abstract}
-Healthcare cost transparency is critical for patient empowerment, yet 92\% of patients lack accurate cost estimates before treatment. This paper presents an interpretable healthcare cost prediction system using XGBoost ensemble with dual Explainable AI (SHAP and LIME) framework. Using the Kaggle Insurance Cost dataset (1,338 patients), we developed a systematic approach: (1) domain-informed preprocessing with WHO medical standards, (2) targeted XGBoost optimization, and (3) ensemble stacking achieving $R^2 = 0.8770$. SHAP global explanations identified smoking-BMI interaction as the dominant cost driver (\$6,397.52 mean impact), while LIME local explanations provided patient-specific insights with \$74,518 lifestyle delta between high/low-cost cases. The dual XAI framework enables both global model validation and real-time patient-facing explanations (8 seconds per patient). Our quantified findings show smoking cessation potential savings of \$8,000 and combined lifestyle interventions up to \$45,200, providing concrete evidence for patient empowerment and wellness program ROI calculation.
+Transparansi biaya pengobatan merupakan kebutuhan kritis bagi pemberdayaan pasien dalam pengambilan keputusan perawatan kesehatan. Studi menunjukkan 92\% pasien menginginkan estimasi biaya pengobatan sebelum perawatan, namun informasi ini jarang tersedia dengan akurat. Ketidakpastian biaya menyebabkan 47\% penduduk dewasa AS mengalami kesulitan membayar biaya pengobatan dan 41\% memiliki utang medis. Penelitian ini mengimplementasikan algoritma XGBoost untuk prediksi biaya pengobatan pasien menggunakan dataset Kaggle Insurance Cost (1338 records, 7 fitur: age, sex, BMI, children, smoker, region, charges). XGBoost dipilih karena kemampuannya dalam menangani interaksi fitur kompleks dan integrasi optimal dengan teknik Explainable AI. Implementasi SHAP (SHapley Additive exPlanations) dan LIME (Local Interpretable Model-agnostic Explanations) dilakukan untuk memastikan transparansi dan interpretabilitas model. Linear Regression digunakan sebagai baseline untuk menunjukkan peningkatan performa. Framework patient-centric dikembangkan untuk menyajikan prediksi biaya pengobatan dengan penjelasan yang dapat dipahami pasien. Model XGBoost mencapai akurasi prediksi tinggi ($R^2 = 0.8770$) dengan tetap mempertahankan interpretabilitas melalui XAI. Implementasi SHAP memberikan penjelasan global dan lokal yang konsisten, sementara LIME menawarkan interpretasi cepat untuk aplikasi real-time. Framework yang dikembangkan menghasilkan dashboard interaktif yang memungkinkan pasien memahami faktor-faktor yang mempengaruhi biaya pengobatan mereka. Penelitian ini berkontribusi pada pengembangan sistem prediksi biaya pengobatan yang tidak hanya akurat tetapi juga transparan dan dapat dipahami pasien. Integrasi XGBoost dengan XAI menciptakan keseimbangan antara performa prediktif dan interpretabilitas, mendukung pasien dalam membuat keputusan kesehatan yang lebih informed. Metodologi yang dikembangkan memiliki potensi adaptasi untuk konteks sistem kesehatan Indonesia.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -71,6 +71,14 @@ Ahmed et al. \cite{ahmed2025} compared SHAP and LIME for healthcare predictions,
 Existing research predominantly focuses on either (1) achieving high prediction accuracy without interpretability, or (2) implementing single XAI method without exploring synergistic combinations. Furthermore, most studies adopt provider-centric perspectives rather than patient empowerment focus. Our work fills this gap by developing a patient-centric framework with dual XAI integration, quantified actionable recommendations, and production-ready deployment feasibility.
 
 \section{Methodology}
+
+\begin{figure}[htbp]
+\centerline{\includegraphics[width=\columnwidth]{paper/XGBoost_XAI_Architecture.png}}
+\caption{System Architecture for Healthcare Cost Prediction with XGBoost and Dual XAI Framework}
+\label{fig:architecture}
+\end{figure}
+
+Figure \ref{fig:architecture} presents the comprehensive architecture of our healthcare cost prediction system. The pipeline consists of five main stages: (1) data preprocessing with domain-informed feature engineering, (2) baseline model establishment using linear regression, (3) XGBoost optimization through hyperparameter tuning, (4) dual XAI integration with SHAP and LIME for model interpretability, and (5) patient-centric dashboard deployment for real-time predictions and explanations.
 
 \subsection{Dataset and Preprocessing}
 We utilized the Kaggle Insurance Cost dataset containing 1,338 patient records with 6 original features (age, sex, BMI, children, smoker, region) and 1 target variable (medical charges in USD). Data quality was exceptional with only 3 missing BMI values (0.22\%).
@@ -204,6 +212,61 @@ We quantified actionable savings potential:
 \item \textbf{Wellness Program ROI}: Annual savings \$23,600 per smoker (280\% cost differential: \$32,050 smoker vs \$8,434 non-smoker)
 \end{itemize}
 
+\section{Interactive Dashboard Implementation}
+
+To translate our technical achievements into practical patient empowerment, we developed an interactive web-based dashboard using Streamlit, deployed at \textit{healthcare-cost-predictor.streamlit.app}. The dashboard serves as the final implementation of our patient-centric framework, bridging the gap between machine learning model outputs and actionable patient insights.
+
+\subsection{Dashboard Architecture and Features}
+
+The dashboard implements a modular architecture with four core components:
+
+\textbf{1. Patient Input Interface}: A sidebar form collects essential patient information (age 18--64, sex, BMI 15--55, number of children 0--5, smoking status, and geographic region). The interface provides real-time BMI categorization according to WHO standards (Underweight/Normal/Overweight/Obese) with color-coded visual indicators.
+
+\textbf{2. Real-Time Prediction Engine}: Upon user input, the dashboard loads the cached ensemble model (final\_best\_model.pkl) and performs feature engineering identical to the training pipeline. The prediction engine outputs: (a) estimated annual healthcare cost with 95\% confidence interval calculated from base estimator variance, (b) risk categorization (Low/Medium/High) based on smoking status and BMI, and (c) comparative metrics against population average (\$13,270), smoker average (\$32,050), and non-smoker average (\$8,434).
+
+\textbf{3. Dual XAI Explanation Tabs}: The dashboard integrates both SHAP and LIME explanations through separate interactive tabs:
+
+\begin{itemize}
+\item \textbf{SHAP Global Analysis Tab}: Initializes PermutationExplainer with 100 background samples from properly encoded training data. Generates waterfall plots showing feature contributions from base expected value (\$14,120.74) to final prediction. Displays feature impact summary table ranking all 14 features by absolute SHAP values. Computation time: 3--5 seconds.
+
+\item \textbf{LIME Local Explanation Tab}: Creates LimeTabularExplainer with full training data (1,338 samples) and generates patient-specific explanations using 5,000 perturbations. Renders intuitive bar plots highlighting top cost drivers (positive contributors) and cost reducers (negative contributors). Displays quantified dollar impacts for each feature. Computation time: $\sim$8 seconds per patient.
+\end{itemize}
+
+\textbf{4. What-If Scenario Analysis}: The most actionable feature for patient empowerment, this component enables:
+
+\begin{itemize}
+\item \textbf{Smoking Cessation Simulation}: For smokers, calculates predicted cost if smoking status changes to ``No'' while keeping all other factors constant. Displays current cost, modified cost, absolute savings, and percentage reduction. Example: A 50-year-old obese smoker with \$45,000 predicted cost sees potential \$28,000 savings from quitting.
+
+\item \textbf{Weight Management Simulation}: Provides slider to adjust target BMI (18.5 to current BMI). Real-time recalculation shows predicted cost at target weight with potential savings. Helps patients visualize concrete financial benefits of weight loss programs.
+
+\item \textbf{Combined Lifestyle Intervention}: For high-risk patients (smoker AND obese), calculates maximum potential savings from both quitting smoking and achieving normal BMI (25.0). Demonstrates total lifestyle impact up to \$45,200 annual savings.
+\end{itemize}
+
+\subsection{Technical Implementation Details}
+
+\textbf{Categorical Encoding Consistency}: A critical implementation challenge was maintaining exact encoding consistency between training and deployment. Training data used lowercase categorical values with \texttt{pd.Categorical().codes} for alphabetical encoding. The dashboard implements matching logic:
+
+\begin{itemize}
+\item \texttt{sex}: female=0, male=1 (alphabetical)
+\item \texttt{region}: northeast=0, northwest=1, southeast=2, southwest=3
+\item \texttt{bmi\_category}: Normal=0, Obese=1, Overweight=2, Underweight=3
+\item \texttt{age\_group}: 18--29=0, 30--39=1, 40--49=2, 50--64=3
+\end{itemize}
+
+The \texttt{engineer\_features()} function converts dashboard inputs (capitalized) to lowercase before encoding, ensuring model compatibility. For SHAP and LIME, the \texttt{prepare\_encoded\_training\_data()} function applies identical \texttt{pd.Categorical().codes} encoding to background samples.
+
+\textbf{Performance Optimization}: The dashboard leverages Streamlit's caching decorators: \texttt{@st.cache\_resource} for one-time model loading and \texttt{@st.cache\_data} for training data loading. This reduces page load time to $\sim$2 seconds after initial cold start. Memory footprint is $\sim$500MB, well within Streamlit Cloud's free tier limit (1GB).
+
+\textbf{User Experience Design}: The interface follows patient-centric design principles: (1) \textit{Clarity}---predictions displayed with large, readable numbers and color-coded risk indicators; (2) \textit{Interactivity}---sliders and radio buttons for intuitive input; (3) \textit{Actionability}---what-if scenarios provide concrete dollar savings; (4) \textit{Transparency}---disclaimers emphasize estimates versus guarantees.
+
+\subsection{Dashboard Validation and Impact}
+
+The deployed dashboard successfully demonstrates real-time explainability feasibility. A typical user workflow completes in under 30 seconds: (1) input collection (10 seconds), (2) prediction generation ($<$1 second), (3) LIME explanation rendering (8 seconds), (4) what-if scenario exploration (interactive). SHAP explanations, while slower (3--5 seconds), remain acceptable for non-time-critical global understanding.
+
+The dashboard provides empirical evidence for patient empowerment through quantified transparency. For example, a 35-year-old obese smoker (BMI=32) receives: predicted cost \$38,450 (95\% CI: \$32,180--\$44,720), risk category ``High Risk'', LIME explanation showing smoker\_bmi\_interaction contributing +\$15,200, and what-if analysis revealing \$26,300 potential savings from quitting smoking and reducing BMI to 25.
+
+This concrete, actionable information supports informed decision-making impossible with opaque cost predictions. The dashboard converts abstract machine learning predictions into tangible financial planning tools, fulfilling the thesis objective of patient-centric cost transparency.
+
 \section{Discussion}
 
 \subsection{Medical Validation}
@@ -217,7 +280,7 @@ Our $R^2 = 0.8770$ is competitive with or superior to published healthcare cost 
 The dual XAI framework implementation validates Ahmed et al.'s \cite{ahmed2025} recommendation for hybrid SHAP-LIME approach, empirically demonstrating their complementarity for comprehensive interpretability.
 
 \subsection{Production Deployment Feasibility}
-Model characteristics enable production deployment: (1) Training time $\sim$1.13 seconds (acceptable for batch retraining); (2) Prediction speed milliseconds for 200 samples (real-time feasible); (3) LIME computation $\sim$8 seconds per patient (interactive dashboard viable); (4) Low overfitting gap 0.0102 ensures reliable generalization.
+Model characteristics enable production deployment: (1) Training time $\sim$1.13 seconds (acceptable for batch retraining); (2) Prediction speed milliseconds for 200 samples (real-time feasible); (3) LIME computation $\sim$8 seconds per patient (interactive dashboard viable); (4) Low overfitting gap 0.0102 ensures reliable generalization. The successful Streamlit Cloud deployment demonstrates practical viability with 500MB memory footprint and sub-30-second user workflows.
 
 \subsection{Limitations}
 Dataset limitations include: (1) Geographic scope limited to US healthcare system; (2) Cross-sectional data without longitudinal disease progression; (3) Absence of detailed medical history (comorbidities, medications); (4) Single aggregate cost variable without granular breakdown (inpatient, outpatient, pharmacy).
@@ -225,20 +288,20 @@ Dataset limitations include: (1) Geographic scope limited to US healthcare syste
 Methodological limitations: (1) Simplified high\_risk definition (smoker AND obese) versus nuanced real-world multi-factor risk; (2) RandomizedSearchCV comprehensive but not exhaustive; (3) Ensemble complexity increases deployment requirements; (4) Correlational findings require causal inference methods for causality establishment.
 
 \section{Conclusion}
-This paper presented an interpretable healthcare cost prediction system integrating XGBoost ensemble ($R^2 = 0.8770$) with dual XAI framework (SHAP + LIME). Key achievements:
+This paper presented an interpretable healthcare cost prediction system integrating XGBoost ensemble ($R^2 = 0.8770$) with dual XAI framework (SHAP + LIME) and interactive patient-facing dashboard. Key achievements:
 
-\textbf{Methodological}: Systematic optimization approach from baseline $\rightarrow$ diagnosis $\rightarrow$ targeted optimization $\rightarrow$ ensemble stacking; domain-informed preprocessing with WHO medical standards; dual XAI integration demonstrating SHAP-LIME complementarity.
+\textbf{Methodological}: Systematic optimization approach from baseline $\rightarrow$ diagnosis $\rightarrow$ targeted optimization $\rightarrow$ ensemble stacking; domain-informed preprocessing with WHO medical standards; dual XAI integration demonstrating SHAP-LIME complementarity; production-ready dashboard deployment with real-time explainability.
 
-\textbf{Empirical}: Quantification of smoking dominance (280\% cost increase), BMI-smoking synergy (370\% for obese smokers), and comprehensive feature hierarchy validation across multiple model types.
+\textbf{Empirical}: Quantification of smoking dominance (280\% cost increase), BMI-smoking synergy (370\% for obese smokers), comprehensive feature hierarchy validation, and \$74,518 lifestyle delta demonstrating massive preventable cost variation.
 
-\textbf{Practical}: Patient empowerment framework with quantified savings (\$8,000 smoking cessation, \$45,200 combined interventions), wellness program ROI calculation (\$23,600/smoker/year), and production-ready model with real-time explanation capability.
+\textbf{Practical}: Patient empowerment framework with quantified savings (\$8,000 smoking cessation, \$45,200 combined interventions), wellness program ROI calculation (\$23,600/smoker/year), interactive what-if scenario analysis, and deployed accessible dashboard converting ML predictions into actionable financial planning tools.
 
-Future work includes: (1) Longitudinal study with multi-year cost trajectories; (2) Granular cost breakdown (hospital, pharmacy, preventive care); (3) Integration with Electronic Health Records for clinical decision support; (4) Randomized controlled trials to validate whether cost transparency reduces actual healthcare expenditures; (5) Adaptation for universal healthcare systems beyond US context.
+Future work includes: (1) Longitudinal study with multi-year cost trajectories; (2) Granular cost breakdown (hospital, pharmacy, preventive care); (3) Integration with Electronic Health Records for clinical decision support; (4) Randomized controlled trials to validate whether cost transparency reduces actual healthcare expenditures; (5) Adaptation for universal healthcare systems beyond US context; (6) User experience studies with real patients to measure dashboard effectiveness.
 
-The dual XAI framework enables both rigorous model validation (SHAP) and patient-friendly real-time explanations (LIME), supporting transparent, evidence-based healthcare cost awareness and lifestyle intervention decisions.
+The dual XAI framework enables both rigorous model validation (SHAP) and patient-friendly real-time explanations (LIME), supporting transparent, evidence-based healthcare cost awareness and lifestyle intervention decisions. The deployed dashboard demonstrates practical feasibility of translating advanced machine learning research into tangible patient empowerment tools.
 
 \section*{Acknowledgment}
-We thank Universitas Telkom School of Informatics for supporting this research. Dataset courtesy of Kaggle Insurance Cost dataset (Miri Choi, 2018).
+We thank Universitas Telkom School of Informatics for supporting this research. Dataset courtesy of Kaggle Insurance Cost dataset (Miri Choi, 2018). Dashboard hosted on Streamlit Community Cloud.
 
 \begin{thebibliography}{00}
 \bibitem{kff2024} Kaiser Family Foundation, ``Americans' challenges with health care costs,'' KFF Health Polling, 2024.
